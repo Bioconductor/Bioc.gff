@@ -1,3 +1,5 @@
+#' @include readGFF.R
+
 # GFF (General Feature Format) support (all three versions, plus G --------
 
 #' @name GFFFile-class

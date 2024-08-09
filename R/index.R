@@ -24,13 +24,16 @@ setMethod("queryForResource", "BiocFile", function(manager, x, which = NULL, ...
     if (!is.null(which) && is.character(r)) {
         x_tbi <- paste(r, "tbi", sep = ".")
         if (file.exists(x_tbi))
-            ans <- queryForResource(manager, TabixFile(r), which = which, ...)
+            ans <- queryForResource(
+                manager, Rsamtools::TabixFile(r), which = which, ...
+            )
     }
     ans
 })
 
 connectionForResource <- BiocIO:::connectionForResource
 
+#' @importClassesFrom Rsamtools TabixFile
 setMethod("queryForResource", "TabixFile",
           function(manager, x, which, header = TRUE, ...) {
               tabixHeader <- headerTabix(x)
