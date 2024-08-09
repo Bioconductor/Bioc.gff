@@ -1,5 +1,5 @@
-#ifndef BIOCGFF_H
-#define BIOCGFF_H
+#ifndef BIOC_GFF_H
+#define BIOC_GFF_H
 
 #include <Rinternals.h>
 

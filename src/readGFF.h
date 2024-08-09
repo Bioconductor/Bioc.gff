@@ -1,7 +1,7 @@
 #ifndef GFF_H
 #define GFF_H
 
-#include "biocgff.h"
+#include "Bioc_gff.h"
 
 /* The .Call entry points */
 

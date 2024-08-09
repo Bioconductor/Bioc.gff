@@ -1,4 +1,4 @@
-#include "biocgff.h"
+#include "Bioc_gff.h"
 #include "readGFF.h"
 #include "utils.h"
 
@@ -17,7 +17,7 @@ static const R_CallMethodDef callMethods[] = {
     {NULL, NULL, 0}
 };
 
-void R_init_biocgff(DllInfo *info)
+void R_init_Bioc_gff(DllInfo *info)
 {
     R_registerRoutines(info, NULL, callMethods, NULL, NULL);
 }
