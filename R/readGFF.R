@@ -506,21 +506,20 @@ readGFF <- function(filepath, version=0, columns=NULL, tags=NULL,
     Seqinfo(srt[[1L]], srt[[3L]])
 }
 
-### -- by Michael
+### -- by Michael, updated by Marcel
 .parseSpeciesAsMetadata <- function(lines) {
     species <- unique(grep("##species", lines, fixed=TRUE, value=TRUE))
-    if (length(species) > 1L) {
+    if (length(species) > 1L)
         stop("multiple species definitions found")
-    }
     metadata <- list()
-    if (length(species) == 1L) {
+    if (identical(length(species), 1L)) {
         species <- sub("##species ", "", species, fixed=TRUE)
-        if (isNCBISpeciesURL(species)) {
-            ncbiError <- function(e) {
+        if (isNCBISpeciesURL(species))
+            metadata <- tryCatch({
+                metadataFromNCBI(species)
+            }, error = function(e) {
                 warning("failed to retrieve organism information from NCBI")
-            }
-            metadata <- tryCatch(metadataFromNCBI(species), error = ncbiError)
-        }
+            })
     }
     metadata
 }

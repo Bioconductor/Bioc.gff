@@ -21,12 +21,15 @@ Imports:
   curl,
   GenomeInfoDb,
   GenomicRanges,
+  httr2,
   IRanges,
   methods,
   rtracklayer,
   Rsamtools,
+  rvest,
   S4Vectors,
   stats,
+  utils,
   XVector
 Suggests:
   GenomicFeatures
@@ -43,5 +46,6 @@ Collate:
     'readGFF.R'
     'GFF-class.R'
     'GFF-coercion.R'
+    'NCBI.R'
     'index.R'
     'utilities.R'
