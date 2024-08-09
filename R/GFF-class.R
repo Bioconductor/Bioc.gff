@@ -227,8 +227,11 @@ NULL
 #' @exportClass GFFFile
 setClass("GFFFile", contains = "BiocFile")
 
-## private
+#' @rdname GFFFile-class
+#'
 #' @importFrom methods new
+#'
+#' @export
 GFFFile <- function(resource, version = c("", "1", "2", "3")) {
   version <- match.arg(version)
   new(gffFileClass(version), resource = resource)
@@ -343,6 +346,7 @@ setMethod("export", c("GRangesList", "GTFFile"),
 #' @importFrom BiocIO resource
 #' @importFrom BiocGenerics start
 #' @importFrom utils packageVersion relist write.table
+#' @importFrom S4Vectors wmsg
 #'
 #' @exportMethod export
 setMethod("export", c("GenomicRanges", "GFFFile"),

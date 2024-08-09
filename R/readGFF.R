@@ -177,6 +177,7 @@ GFFcolnames <- function(GFF1=FALSE)
 # readGFF -----------------------------------------------------------------
 
 ### Returns 0L, 1L, 2L, or 3L.
+#' @importFrom S4Vectors isSingleNumber
 .normarg_version <- function(version=0)
 {
     if (is.character(version)) {
@@ -297,6 +298,14 @@ GFFcolnames <- function(GFF1=FALSE)
                any(grepl(",", df[[j]], fixed=TRUE)))
 }
 
+urlDecode <- function(str, na.strings="NA")
+{
+    ans <- curl::curl_unescape(str)
+    if (!identical(na.strings, "NA"))
+        ans[is.na(str)] <- na.strings
+    ans
+}
+
 ### 'df' must be a data-frame-like object (typically an ordinary data frame or
 ### a DataFrame object). 'decode_idx' must be a non-empty integer vector
 ### indicating which columns to decode. The columns to decode must be character
@@ -328,7 +337,7 @@ GFFcolnames <- function(GFF1=FALSE)
                                                  PartitioningByEnd(rep.int(0L, length(col))))
                              not_na <- !is.na(col)
                              tmp <- strsplit(col[not_na], ",", fixed=TRUE)
-                             split_col[not_na] <- CharacterList(tmp)
+                             split_col[not_na] <- IRanges::CharacterList(tmp)
                              if (raw_data)
                                  return(split_col)
                              relist(urlDecode(unlist(split_col)), split_col)
@@ -514,7 +523,8 @@ readGFF <- function(filepath, version=0, columns=NULL, tags=NULL,
     metadata
 }
 
-#' @importFrom S4Vectors isSingleStringOrNA
+#' @importFrom S4Vectors isSingleStringOrNA metadata<-
+#' @importFrom GenomicRanges makeGRangesFromDataFrame
 readGFFAsGRanges <- function(filepath, version=0, colnames=NULL, filter=NULL,
                              genome=NA,
                              sequenceRegionsAsSeqinfo=FALSE,

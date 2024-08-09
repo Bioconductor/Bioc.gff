@@ -46,6 +46,8 @@
 \alias{export,CompressedGRangesList,GFFFile,ANY-method}
 \title{GFFFile objects}
 \usage{
+GFFFile(resource, version = c("", "1", "2", "3"))
+
 export.gff(object, con, ...)
 
 \S4method{export.gff}{ANY}(object, con, ...)
@@ -101,6 +103,11 @@ import.gff3(con, ...)
 \S4method{genome}{GFFFile}(x)
 }
 \arguments{
+\item{version}{If the format is given as "gff", i.e., it does not specify a
+version, then this should indicate the GFF version as one of \dQuote{} (for
+import only, from the \code{gff-version} directive in the file or "1" if none),
+"1", "2" or "3".}
+
 \item{object}{The object to export, should be a \code{GRanges} or something
 coercible to a \code{GRanges}. If the object has a method for \code{asGFF}, it is
 called prior to coercion. This makes it possible to export a \code{GRangesList}
@@ -123,11 +130,6 @@ passed through \code{export.ucsc}, so track line parameters are supported.}
 
 \item{format}{If not missing, should be one of "gff", "gff1" "gff2", "gff3",
 "gvf", or "gtf".}
-
-\item{version}{If the format is given as "gff", i.e., it does not specify a
-version, then this should indicate the GFF version as one of \dQuote{} (for
-import only, from the \code{gff-version} directive in the file or "1" if none),
-"1", "2" or "3".}
 
 \item{source}{The value for the source column in GFF. This is typically the
 name of the package or algorithm that generated the feature.}

@@ -18,6 +18,7 @@ Description: Parse GFF and GTF files using C++ classes. The package also
 Imports:
   BiocGenerics,
   BiocIO,
+  curl,
   GenomeInfoDb,
   GenomicRanges,
   IRanges,
