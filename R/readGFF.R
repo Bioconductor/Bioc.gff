@@ -490,6 +490,7 @@ readGFF <- function(filepath, version=0, columns=NULL, tags=NULL,
 
 ### sequence-region => Seqinfo -- by Michael
 #' @importFrom utils read.table
+#' @importFrom GenomeInfoDb Seqinfo
 .parseSequenceRegionsAsSeqinfo <- function(lines) {
     sr <- grep("##sequence-region", lines, value=TRUE)
     srcon <- file()
