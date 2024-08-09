@@ -1,2 +1,0 @@
-PKG_OBJECTS = S4Vectors_stubs.o XVector_stubs.o R_init_Bioc_gff.o readGFF.o \
-    utils.o

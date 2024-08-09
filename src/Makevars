@@ -1,8 +1,0 @@
-include Makevars.common
-OBJECTS = $(PKG_OBJECTS)
-PKG_LIBS=-lz -pthread -lssl -lcrypto
-PKG_CPPFLAGS= -DUSE_SSL -D_FILE_OFFSET_BITS=64
-all: $(SHLIB)
-
-clean:
-	rm -f $(OBJECTS)

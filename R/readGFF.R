@@ -79,6 +79,8 @@
 #' df3 <- readGFF(test_gff3, columns=my_columns)
 #' df3
 #' table(df3$seqid, df3$type)
+#'
+#' library(GenomicRanges)
 #' makeGRangesFromDataFrame(df3, keep.extra.columns=TRUE)
 #'
 #' ## Combine use of 'columns' and 'tags' arguments.
@@ -579,7 +581,7 @@ readGFFAsGRanges <- function(filepath, version=0, colnames=NULL, filter=NULL,
                       "disagreement with the Seqinfo object specified via ",
                       "the 'genome' argument"))
     } else if (isSingleString(genome)) {
-        ans_seqinfo <- seqinfoForGenome(genome)  # can return NULL
+        ans_seqinfo <- rtracklayer:::seqinfoForGenome(genome)  # can return NULL
         if (!is.null(ans_seqinfo) &&
             !all(seqlevels(ans) %in% seqlevels(ans_seqinfo)))
         {

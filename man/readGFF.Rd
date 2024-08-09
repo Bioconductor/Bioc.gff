@@ -78,6 +78,8 @@ my_columns <- c("seqid", "start", "end", "strand", "type")
 df3 <- readGFF(test_gff3, columns=my_columns)
 df3
 table(df3$seqid, df3$type)
+
+library(GenomicRanges)
 makeGRangesFromDataFrame(df3, keep.extra.columns=TRUE)
 
 ## Combine use of 'columns' and 'tags' arguments.
