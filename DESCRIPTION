@@ -46,6 +46,6 @@ Collate:
     'GFF-coercion.R'
     'readGFF.R'
     'GFFFile-class.R'
-    'NCBI.R'
     'index.R'
+    'metadataFromNCBI.R'
     'utilities.R'
