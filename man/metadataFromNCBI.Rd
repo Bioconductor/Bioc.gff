@@ -25,19 +25,21 @@ the NCBI Taxonomy Browser. They are a modern re-write of the old functions in
 \code{rtracklayer}. They use \code{httr2} and \code{rvest} to parse the HTML content.
 }
 \examples{
-isNCBISpeciesURL(.NCBI_TAX_URL)
+\dontrun{
+  isNCBISpeciesURL(.NCBI_TAX_URL)
 
-metadataFromNCBI(
-    paste0(.NCBI_TAX_URL, "?mode=Info&id=9606")
-)
-metadataFromNCBI(
-    paste0(.NCBI_TAX_URL, "?id=3702")
-)
-metadataFromNCBI(
-    paste0(.NCBI_TAX_URL, "?name=drosophila+melanogaster")
-)
-metadataFromNCBI(
-    paste0(.NCBI_TAX_URL, "?name=drosophila+miranda")
-)
+  metadataFromNCBI(
+      paste0(.NCBI_TAX_URL, "?mode=Info&id=9606")
+  )
+  metadataFromNCBI(
+      paste0(.NCBI_TAX_URL, "?id=3702")
+  )
+  metadataFromNCBI(
+      paste0(.NCBI_TAX_URL, "?name=drosophila+melanogaster")
+  )
+  metadataFromNCBI(
+      paste0(.NCBI_TAX_URL, "?name=drosophila+miranda")
+  )
+}
 }
 \keyword{internal}

@@ -16,21 +16,25 @@ isNCBISpeciesURL <- function(url) {
 #'
 #' @keywords internal
 #' @examples
-#' isNCBISpeciesURL(.NCBI_TAX_URL)
+#' \dontrun{
+#'   isNCBISpeciesURL(.NCBI_TAX_URL)
 #'
-#' metadataFromNCBI(
-#'     paste0(.NCBI_TAX_URL, "?mode=Info&id=9606")
-#' )
-#' metadataFromNCBI(
-#'     paste0(.NCBI_TAX_URL, "?id=3702")
-#' )
-#' metadataFromNCBI(
-#'     paste0(.NCBI_TAX_URL, "?name=drosophila+melanogaster")
-#' )
-#' metadataFromNCBI(
-#'     paste0(.NCBI_TAX_URL, "?name=drosophila+miranda")
-#' )
+#'   metadataFromNCBI(
+#'       paste0(.NCBI_TAX_URL, "?mode=Info&id=9606")
+#'   )
+#'   metadataFromNCBI(
+#'       paste0(.NCBI_TAX_URL, "?id=3702")
+#'   )
+#'   metadataFromNCBI(
+#'       paste0(.NCBI_TAX_URL, "?name=drosophila+melanogaster")
+#'   )
+#'   metadataFromNCBI(
+#'       paste0(.NCBI_TAX_URL, "?name=drosophila+miranda")
+#'   )
+#' }
+#' @importFrom BiocBaseUtils checkInstalled
 metadataFromNCBI <- function(url) {
+    BiocBaseUtils::checkInstalled(c("httr2", "rvest"))
     res_html <- httr2::request(url) |>
         httr2::req_perform() |>
         httr2::resp_body_html()
