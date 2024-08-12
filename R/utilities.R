@@ -88,3 +88,40 @@ pasteCollapse <- function(x, collapse = ",") {
   x <- as.list(x)
   .Call(CharacterList_pasteCollapse, x, collapse)
 }
+
+## taken from rtracklayer:::checkArgFormat
+checkArgFormat <-
+  function (con, format)
+{
+    if (
+        toupper(format) !=
+        substring(toupper(sub("File$", "", class(con))), 1, nchar(format))
+    )
+    stop("Cannot treat a '", class(con), "' as format '", format, "'")
+}
+
+## adapted from rtracklayer:::singleGenome
+#' @importFrom BiocBaseUtils isScalarCharacter
+singleGenome <-
+  function (x)
+{
+    x1 <- unname(unique(x))
+    if (!isScalarCharacter(x1))
+        stop("Multiple genomes encountered; only one supported")
+    x
+}
+
+## take from rtracklayer:::urlEncode
+urlEncode <-
+  function (str, chars = "-a-zA-Z0-9$_.+!*'(),", keep = TRUE)
+{
+    str <- as.character(str)
+    bad <- chars
+    if (keep)
+        bad <- gsub(paste("[", chars, "]", sep = ""), "", str)
+    bad <- unique(unlist(strsplit(bad, "")))
+    code <- paste("%", charToRaw(paste(bad, collapse = "")), sep = "")
+    for (i in seq_along(bad))
+        str <- gsub(bad[i], code[i], str, fixed = TRUE)
+    str
+}

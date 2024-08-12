@@ -44,6 +44,7 @@
 \alias{export.gff3,ANY-method}
 \alias{genome,GFFFile-method}
 \alias{export,CompressedGRangesList,GFFFile,ANY-method}
+\alias{export,SimpleGRangesList,GFFFile,ANY-method}
 \title{GFFFile objects}
 \usage{
 GFFFile(resource, version = c("", "1", "2", "3"))
@@ -65,6 +66,10 @@ export.gff(object, con, ...)
   append = FALSE,
   index = FALSE
 )
+
+\S4method{export}{SimpleGRangesList,GFFFile,ANY}(object, con, format, ...)
+
+export.gff1(object, con, ...)
 
 \S4method{export.gff1}{ANY}(object, con, ...)
 
@@ -103,6 +108,9 @@ import.gff3(con, ...)
 \S4method{genome}{GFFFile}(x)
 }
 \arguments{
+\item{resource}{\code{character(1)} or \code{connection} A low-level resource typically
+a path, URL, or connection.}
+
 \item{version}{If the format is given as "gff", i.e., it does not specify a
 version, then this should indicate the GFF version as one of \dQuote{} (for
 import only, from the \code{gff-version} directive in the file or "1" if none),
@@ -249,6 +257,10 @@ thus always \code{CharacterList} objects.
 \item \code{export(object = CompressedGRangesList, con = GFFFile, format = ANY)}: 
 
 \item \code{export(object = GenomicRanges, con = GFFFile, format = ANY)}: 
+
+\item \code{export(object = SimpleGRangesList, con = GFFFile, format = ANY)}: 
+
+\item \code{export.gff1()}: 
 
 \item \code{export.gff1(ANY)}: 
 

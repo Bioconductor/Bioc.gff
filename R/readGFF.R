@@ -23,21 +23,25 @@
 #'
 #' @param tags The tags to load. All of them are loaded by default.
 #'
-#' @param filter
+#' @param filter `named list()` Specify to load only desired features,
+#'   e.g., `list(type = c("gene", "mRNA"), seqid = "chr10")`.
 #'
 #' @param nrows `-1` or the maximum number of rows to read in (after
 #' filtering).
 #'
-#' @param raw_data
+#' @param raw_data `logical(1)` If TRUE, numeric columns (e.g. "start" or
+#'   "score") are loaded as character vectors and as-is i.e. how they are found
+#'   in the file.
 #'
-#' @param GFF1
+#' @param GFF1 `logical(1)` Use "group" instead of "attributes" for the 9th
+#'   column name. Default is `FALSE`.
 #'
 #' @return A `DataFrame` with columns corresponding to those in the GFF.
 #'
 #' @author H. Pagès
 #'
 #' @seealso
-#' * [import][`GFFFile-class`] for importing a GFF file as a
+#' * [import][GFFFile-class] for importing a GFF file as a
 #'   [GenomicRanges::GRanges()] object.
 #'
 #' * [GenomicRanges::makeGRangesFromDataFrame()] in the
@@ -525,6 +529,7 @@ readGFF <- function(filepath, version=0, columns=NULL, tags=NULL,
     metadata
 }
 
+#' @importFrom GenomeInfoDb seqlevels seqlevels<- seqinfo<- genome<-
 #' @importFrom S4Vectors isSingleStringOrNA metadata<-
 #' @importFrom GenomicRanges makeGRangesFromDataFrame
 readGFFAsGRanges <- function(filepath, version=0, colnames=NULL, filter=NULL,

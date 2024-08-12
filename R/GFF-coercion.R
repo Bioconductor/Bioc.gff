@@ -36,6 +36,7 @@
 setGeneric("asGFF", function(x, ...) standardGeneric("asGFF"))
 
 #' @describeIn asGFF Coerce to GFF GRanges structure
+#' @importFrom S4Vectors values values<- elementNROWS
 #'
 #' @exportMethod asGFF
 setMethod("asGFF", "GRangesList",
@@ -90,7 +91,7 @@ frame <- function(x) {
     ucs %% 3L
 }
 
-#' @importFrom IRanges IRanges
+#' @importFrom IRanges IRanges togroup
 #' @importFrom GenomicRanges mcols mcols<-
 setMethod("asGTF", "GRangesList",
           function(x) {

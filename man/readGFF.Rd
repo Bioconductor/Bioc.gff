@@ -18,7 +18,8 @@ readGFF(
 )
 }
 \arguments{
-\item{GFF1}{}
+\item{GFF1}{\code{logical(1)} Use "group" instead of "attributes" for the 9th
+column name. Default is \code{FALSE}.}
 
 \item{filepath}{A single string containing the path or URL to the file to
 read. Alternatively can be a connection.}
@@ -35,12 +36,15 @@ default.}
 
 \item{tags}{The tags to load. All of them are loaded by default.}
 
-\item{filter}{}
+\item{filter}{\verb{named list()} Specify to load only desired features,
+e.g., \code{list(type = c("gene", "mRNA"), seqid = "chr10")}.}
 
 \item{nrows}{\code{-1} or the maximum number of rows to read in (after
 filtering).}
 
-\item{raw_data}{}
+\item{raw_data}{\code{logical(1)} If TRUE, numeric columns (e.g. "start" or
+"score") are loaded as character vectors and as-is i.e. how they are found
+in the file.}
 }
 \value{
 A \code{DataFrame} with columns corresponding to those in the GFF.
@@ -95,7 +99,7 @@ readGFF(test_gff3, columns=my_columns, tags=character(0), filter=my_filter)
 }
 \seealso{
 \itemize{
-\item \link[=`GFFFile-class`]{import} for importing a GFF file as a
+\item \link[=GFFFile-class]{import} for importing a GFF file as a
 \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges()}} object.
 \item \code{\link[GenomicRanges:makeGRangesFromDataFrame]{GenomicRanges::makeGRangesFromDataFrame()}} in the
 \pkg{GenomicRanges} package for making a \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges()}}

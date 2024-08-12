@@ -32,7 +32,11 @@ setMethod("queryForResource", "BiocFile", function(manager, x, which = NULL, ...
 })
 
 connectionForResource <- BiocIO:::connectionForResource
+manage <- BiocIO:::manage
 
+#' @importFrom GenomeInfoDb seqinfo
+#' @importFrom Rsamtools headerTabix scanTabix
+#' @importFrom BiocGenerics path
 #' @importClassesFrom Rsamtools TabixFile
 setMethod("queryForResource", "TabixFile",
           function(manager, x, which, header = TRUE, ...) {

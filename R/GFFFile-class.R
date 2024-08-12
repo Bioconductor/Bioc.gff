@@ -230,6 +230,8 @@ setClass("GFFFile", contains = "BiocFile")
 #' @rdname GFFFile-class
 #'
 #' @importFrom methods new
+#' @param resource `character(1)` or `connection` A low-level resource typically
+#'   a path, URL, or connection.
 #'
 #' @export
 GFFFile <- function(resource, version = c("", "1", "2", "3")) {
@@ -344,6 +346,7 @@ setMethod("export", c("GRangesList", "GTFFile"),
 #' @describeIn GFFFile-class
 #'
 #' @importFrom BiocIO resource
+#' @importFrom GenomeInfoDb genome seqnames
 #' @importFrom BiocGenerics start
 #' @importFrom utils packageVersion relist write.table
 #' @importFrom S4Vectors wmsg
@@ -375,7 +378,7 @@ setMethod("export", c("GenomicRanges", "GFFFile"),
             }
 
             if (index)
-              object <- sortBySeqnameAndStart(object)
+              object <- rtracklayer:::sortBySeqnameAndStart(object)
 
             seqname <- seqnames(object)
             if (is.null(mcols(object)$ID))
@@ -469,7 +472,7 @@ setMethod("export", c("GenomicRanges", "GFFFile"),
             write.table(table, con, sep = "\t", na = ".", quote = FALSE,
                         col.names = FALSE, row.names = FALSE, append = TRUE)
             if (index)
-              indexTrack(file)
+              tracklayer:::indexTrack(file)
             invisible(NULL)
           })
 
@@ -484,10 +487,14 @@ UCSCFile <- function(resource) {
   export(object, UCSCFile(resource(con)), subformat = fileFormat(con), ...)
 }
 
+#' @describeIn GFFFile-class
+#'
 #' @exportMethod export
 setMethod("export", c("SimpleGRangesList", "GFFFile"),
           .export_SimpleGRangesList_BiocFile)
 
+#' @describeIn GFFFile-class
+#'
 #' @export
 setGeneric("export.gff1",
            function(object, con, ...) standardGeneric("export.gff1"))
