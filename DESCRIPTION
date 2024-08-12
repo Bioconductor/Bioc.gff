@@ -43,9 +43,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Collate: 
     'Bioc.gff-package.R'
-    'readGFF.R'
-    'GFF-class.R'
     'GFF-coercion.R'
+    'readGFF.R'
+    'GFFFile-class.R'
     'NCBI.R'
     'index.R'
     'utilities.R'

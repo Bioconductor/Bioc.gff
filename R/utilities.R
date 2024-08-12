@@ -1,7 +1,4 @@
-
-### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-### Utilities
-###
+# Utilities ---------------------------------------------------------------
 
 connection <- BiocIO:::connection
 manager <- BiocIO:::manager
