@@ -125,3 +125,9 @@ urlEncode <-
         str <- gsub(bad[i], code[i], str, fixed = TRUE)
     str
 }
+
+## getMethod(rtracklayer:::sortBySeqnameAndStart, "GenomicRanges")
+.sortBySeqnameAndStart <- function (x)
+{
+    x[order(as.factor(seqnames(x)), start(x)), ]
+}

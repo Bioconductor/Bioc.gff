@@ -586,7 +586,7 @@ readGFFAsGRanges <- function(filepath, version=0, colnames=NULL, filter=NULL,
                       "disagreement with the Seqinfo object specified via ",
                       "the 'genome' argument"))
     } else if (isSingleString(genome)) {
-        ans_seqinfo <- rtracklayer:::seqinfoForGenome(genome)  # can return NULL
+        ans_seqinfo <- GenomeInfoDb::Seqinfo(genome = genome)
         if (!is.null(ans_seqinfo) &&
             !all(seqlevels(ans) %in% seqlevels(ans_seqinfo)))
         {

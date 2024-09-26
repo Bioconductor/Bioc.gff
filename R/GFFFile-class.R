@@ -378,7 +378,7 @@ setMethod("export", c("GenomicRanges", "GFFFile"),
             }
 
             if (index)
-              object <- rtracklayer:::sortBySeqnameAndStart(object)
+              object <- .sortBySeqnameAndStart(object)
 
             seqname <- seqnames(object)
             if (is.null(mcols(object)$ID))

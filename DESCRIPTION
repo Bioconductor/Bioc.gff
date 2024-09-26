@@ -24,7 +24,6 @@ Imports:
   GenomicRanges,
   IRanges,
   methods,
-  rtracklayer,
   Rsamtools,
   S4Vectors,
   stats,
