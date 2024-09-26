@@ -207,7 +207,7 @@ combination of support for hierarchical data and arbitrary descriptive
 attributes makes GFF(3) the preferred format for representing gene models.
 
 Although GFF features a \code{score} column, large quantitative data belong
-in a format like \link[=BigWigFile]{BigWig} and alignments from
+in a format like \code{BigWig} and alignments from
 high-throughput experiments belong in \link[Rsamtools:BamFile]{BAM}. For
 variants, the VCF format (supported by the VariantAnnotation package) seems
 to be more widely adopted than the GVF extension.
@@ -216,9 +216,9 @@ A note on the UCSC track line metaformat: track lines are a means for
 passing hints to visualization tools like the UCSC Genome Browser and the
 Integrated Genome Browser (IGB), and they allow multiple tracks to be
 concatenated in the same file. Since GFF is not a UCSC format, it is not
-common to annotate GFF data with track lines, but rtracklayer still supports
-it. To export or import GFF data in the track line format, call
-\code{\link{export.ucsc}} or \code{\link{import.ucsc}}.
+common to annotate GFF data with track lines, but \code{rtracklayer} still
+supports it. To export or import GFF data in the track line format, call
+\code{export.ucsc} or \code{import.ucsc}.
 
 The following is the mapping of GFF elements to a \code{GRanges} object.  NA
 values are allowed only where indicated.  These appear as a "." in
