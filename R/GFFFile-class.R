@@ -200,6 +200,7 @@
 #'   import(test_gff3, colnames = c("type", "geneName"))
 #'
 #'   ## 'which'
+#'   library(GenomicRanges)
 #'   which <- GRanges("chr10:90000-93000")
 #'   import(test_gff3, which = which)
 #'
