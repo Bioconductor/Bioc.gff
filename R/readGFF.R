@@ -144,13 +144,13 @@ readGFFPragmas <- function(filepath)
         return(attrcol_fmt)
     }
     version <- sub("^##gff-version", "", pragmas[idx])
-    version <- unique(version)
+    version <- unique(trimws(version))
     if (length(version) > 1L) {
         warning(wmsg("more than one GFF version specified in the file, ",
                      "returning the first one"))
         version <- version[[1L]]
     }
-    version <- suppressWarnings(as.integer(version))
+    version <- as.integer(version)
     if (is.na(version)) {
         warning(wmsg("unrecognized GFF version specified in the file"))
         if (is.null(attrcol_fmt))
