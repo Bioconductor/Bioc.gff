@@ -62,7 +62,7 @@ export.gff(object, con, ...)
   con,
   format,
   version = c("1", "2", "3"),
-  source = "rtracklayer",
+  source = "Bioc.gff",
   append = FALSE,
   index = FALSE
 )
@@ -191,7 +191,7 @@ whereas in the later versions the last column holds application-specific
 attributes, with some conventions defined for those commonly used. This
 attribute support facilitates specifying extensions to the format. These
 include GTF (Gene Transfer Format, an extension of GFF2) and GVF (Genome
-Variation Format, an extension of GFF3).  The rtracklayer package recognizes
+Variation Format, an extension of GFF3).  The \code{Bioc.gff} package recognizes
 the "gtf" and "gvf" extensions and parses the extra attributes
 into columns of the result; however, it does not perform any
 extension-specific processing. Both GFF1 and GFF2 have been proclaimed
@@ -216,7 +216,7 @@ A note on the UCSC track line metaformat: track lines are a means for
 passing hints to visualization tools like the UCSC Genome Browser and the
 Integrated Genome Browser (IGB), and they allow multiple tracks to be
 concatenated in the same file. Since GFF is not a UCSC format, it is not
-common to annotate GFF data with track lines, but \code{rtracklayer} still
+common to annotate GFF data with track lines, but \code{Bioc.gff} still
 supports it. To export or import GFF data in the track line format, call
 \code{export.ucsc} or \code{import.ucsc}.
 
@@ -228,7 +228,7 @@ generates defaults for missing columns.
 \describe{
 \item{seqid, start, end}{the \code{ranges} component.}
 \item{source}{character vector in the \code{source} column; defaults to
-"rtracklayer" on export.}
+"Bioc.gff" on export.}
 \item{type}{character vector in the \code{type} column; defaults to
 "sequence_feature" in the output, i.e., SO:0000110.}
 \item{score}{numeric vector (NA's allowed) in the \code{score} column,

@@ -31,7 +31,7 @@
 #' attributes, with some conventions defined for those commonly used. This
 #' attribute support facilitates specifying extensions to the format. These
 #' include GTF (Gene Transfer Format, an extension of GFF2) and GVF (Genome
-#' Variation Format, an extension of GFF3).  The rtracklayer package recognizes
+#' Variation Format, an extension of GFF3).  The `Bioc.gff` package recognizes
 #' the "gtf" and "gvf" extensions and parses the extra attributes
 #' into columns of the result; however, it does not perform any
 #' extension-specific processing. Both GFF1 and GFF2 have been proclaimed
@@ -56,7 +56,7 @@
 #' passing hints to visualization tools like the UCSC Genome Browser and the
 #' Integrated Genome Browser (IGB), and they allow multiple tracks to be
 #' concatenated in the same file. Since GFF is not a UCSC format, it is not
-#' common to annotate GFF data with track lines, but `rtracklayer` still
+#' common to annotate GFF data with track lines, but `Bioc.gff` still
 #' supports it. To export or import GFF data in the track line format, call
 #' `export.ucsc` or `import.ucsc`.
 #'
@@ -68,7 +68,7 @@
 #' \describe{
 #' \item{seqid, start, end}{the `ranges` component.}
 #' \item{source}{character vector in the `source` column; defaults to
-#'   "rtracklayer" on export.}
+#'   "Bioc.gff" on export.}
 #' \item{type}{character vector in the `type` column; defaults to
 #'   "sequence_feature" in the output, i.e., SO:0000110.}
 #' \item{score}{numeric vector (NA's allowed) in the `score` column,
@@ -355,7 +355,7 @@ setMethod("export", c("GRangesList", "GTFFile"),
 #' @exportMethod export
 setMethod("export", c("GenomicRanges", "GFFFile"),
           function(object, con, format, version = c("1", "2", "3"),
-                   source = "rtracklayer", append = FALSE, index = FALSE)
+                   source = "Bioc.gff", append = FALSE, index = FALSE)
           {
             if (!missing(format))
               checkArgFormat(con, format)
