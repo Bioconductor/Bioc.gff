@@ -61,8 +61,9 @@
 #' GFFcolnames()
 #' GFFcolnames(GFF1=TRUE)  # "group" instead of "attributes"
 #'
-#' tests_dir <- system.file("tests", package="rtracklayer")
-#' test_gff3 <- file.path(tests_dir, "genes.gff3")
+#' test_gff3 <- system.file(
+#'     "extdata", "genes.gff3", package="Bioc.gff", mustWork=TRUE
+#' )
 #'
 #' ## Load everything.
 #' df0 <- readGFF(test_gff3)

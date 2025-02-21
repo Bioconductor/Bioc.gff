@@ -171,8 +171,9 @@
 #' @keywords methods classes
 #' @examples
 #'
-#'   test_path <- system.file("tests", package = "rtracklayer")
-#'   test_gff3 <- file.path(test_path, "genes.gff3")
+#' test_gff3 <- system.file(
+#'     "extdata", "genes.gff3", package = "Bioc.gff", mustWork = TRUE
+#' )
 #'
 #'   ## basic import
 #'   test <- import(test_gff3)
