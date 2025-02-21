@@ -72,7 +72,7 @@ gffFileVersion <- function(file) {
 
 asGFFVersion <- function(con, version) {
   if (!is(con, gffFileClass(version))) {
-    if (class(con) != "GFFFile")
+    if (!is(con, "GFFFile"))
       warning("Treating a '", class(con), "' as GFF version '", version, "'")
     con <- GFFFile(resource(con), version)
   }
