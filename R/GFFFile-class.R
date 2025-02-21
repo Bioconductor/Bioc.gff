@@ -434,24 +434,26 @@ setMethod("export", c("GenomicRanges", "GFFFile"),
               if (length(custom)) {
                 if (version == "3") tvsep <- "=" else tvsep <- " "
                 attrs <- mcols(object)
-                attrs <- as.data.frame(sapply(custom, function(name) {
-                  x <- attrs[[name]]
-                  x_flat <- if (is(x, "List")) unlist(x, use.names=FALSE) else x
-                  x_char <- as.character(x_flat)
-                  x_char <- sub(" *$", "", sub("^ *", "", as.character(x_char)))
-                  if (version == "3")
-                    x_char <- urlEncode(x_char, "%\t\n\r;=&,", FALSE)
-                  if (is(x, "List")) {
-                    x_char[is.na(x_char)] <- "."
-                    x_char <- pasteCollapse(relist(x_char, x))
-                    x_char[elementNROWS(x) == 0] <- NA
-                  }
-                  ## FIXME: add option so these become "." instead of removing
-                  x_char[is.na(x_char)] <- "\r"
-                  if (!is.numeric(x_flat) && version != "3")
-                    x_char <- paste0("\"", x_char, "\"")
-                  paste(name, x_char, sep = tvsep)
-                }, simplify = FALSE))
+                names(custom) <- custom
+                lattrs <- lapply(custom, function(name) {
+                    x <- attrs[[name]]
+                    x_flat <- if (is(x, "List")) unlist(x, use.names=FALSE) else x
+                    x_char <- as.character(x_flat)
+                    x_char <- sub(" *$", "", sub("^ *", "", as.character(x_char)))
+                    if (version == "3")
+                        x_char <- urlEncode(x_char, "%\t\n\r;=&,", FALSE)
+                    if (is(x, "List")) {
+                        x_char[is.na(x_char)] <- "."
+                        x_char <- pasteCollapse(relist(x_char, x))
+                        x_char[elementNROWS(x) == 0] <- NA
+                    }
+                    ## FIXME: add option so these become "." instead of removing
+                    x_char[is.na(x_char)] <- "\r"
+                    if (!is.numeric(x_flat) && version != "3")
+                        x_char <- paste0("\"", x_char, "\"")
+                    paste(name, x_char, sep = tvsep)
+                })
+                attrs <- as.data.frame(lattrs)
                 if (version == "3") sep <- ";" else sep <- "; "
                 attrs <- do.call(paste, c(attrs, sep = sep))
                 attrs <- gsub("[^;]*?\r\"?(;|$)", "", attrs)
