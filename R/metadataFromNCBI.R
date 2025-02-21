@@ -14,6 +14,14 @@ isNCBISpeciesURL <- function(url) {
 #' @param url A URL to the NCBI Taxonomy Browser, typically obtained from a
 #' GFF file with the `## species` line.
 #'
+#' @returns
+#' * metadataFromNCBI: A `list` with two elements: `Taxonomy ID` and
+#'   `Organism`.
+#' * parseOrganismFromNCBI: A `character` with the Organism name.
+#' * isNCBISpeciesURL: A `logical` indicating if the URL is from the NCBI
+#'   Taxonomy Browser.
+#' * parseTaxonomyIDFromNCBI: A `character` with the Taxonomy ID.
+#'
 #' @keywords internal
 #' @examples
 #' \dontrun{

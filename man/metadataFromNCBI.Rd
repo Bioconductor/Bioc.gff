@@ -19,6 +19,16 @@ parseTaxonomyIDFromNCBI(html, url)
 \item{url}{A URL to the NCBI Taxonomy Browser, typically obtained from a
 GFF file with the \verb{## species} line.}
 }
+\value{
+\itemize{
+\item metadataFromNCBI: A \code{list} with two elements: \verb{Taxonomy ID} and
+\code{Organism}.
+\item parseOrganismFromNCBI: A \code{character} with the Organism name.
+\item isNCBISpeciesURL: A \code{logical} indicating if the URL is from the NCBI
+Taxonomy Browser.
+\item parseTaxonomyIDFromNCBI: A \code{character} with the Taxonomy ID.
+}
+}
 \description{
 These helper functions obtain both the Taxonomy ID and the Organism name from
 the NCBI Taxonomy Browser. They are a modern re-write of the old functions in
