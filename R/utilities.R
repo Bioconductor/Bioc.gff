@@ -106,7 +106,7 @@ singleGenome <-
   function (x)
 {
     x1 <- unname(unique(x))
-    if (!isScalarCharacter(x1))
+    if (!isScalarCharacter(x1, na.ok = TRUE))
         stop("Multiple genomes encountered; only one supported")
     x1
 }
