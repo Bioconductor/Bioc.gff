@@ -37,11 +37,11 @@ hierarchical structure. This object is then suitable for export as GFF3.
 
 }}
 \examples{
-\dontrun{
-  library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-  library(GenomicFeatures)
-  exons <- exonsBy(TxDb.Hsapiens.UCSC.hg19.knownGene)
-  mcols(asGFF(exons))
+\donttest{
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+library(GenomicFeatures)
+exons <- exonsBy(TxDb.Hsapiens.UCSC.hg19.knownGene)
+mcols(asGFF(exons))
 }
 }
 \author{

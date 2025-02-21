@@ -335,7 +335,7 @@ library(GenomicRanges)
 which <- GRanges("chr10:90000-93000")
 import(test_gff3, which = which)
 
-\dontrun{
+\donttest{
 ## 'append'
 test_gff3_out <- file.path(tempdir(), "genes.gff3")
 

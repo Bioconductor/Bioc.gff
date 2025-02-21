@@ -35,7 +35,7 @@ the NCBI Taxonomy Browser. They are a modern re-write of the old functions in
 \code{rtracklayer}. They use \code{httr2} and \code{rvest} to parse the HTML content.
 }
 \examples{
-\dontrun{
+\donttest{
   isNCBISpeciesURL(.NCBI_TAX_URL)
 
   metadataFromNCBI(

@@ -24,7 +24,7 @@ isNCBISpeciesURL <- function(url) {
 #'
 #' @keywords internal
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'   isNCBISpeciesURL(.NCBI_TAX_URL)
 #'
 #'   metadataFromNCBI(

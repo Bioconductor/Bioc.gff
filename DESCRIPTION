@@ -32,7 +32,8 @@ Imports:
 Suggests:
   GenomicFeatures,
   httr2,
-  rvest
+  rvest,
+  TxDb.Hsapiens.UCSC.hg19.knownGene
 LinkingTo:
   S4Vectors,
   XVector,

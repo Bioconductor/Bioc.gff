@@ -26,11 +26,11 @@
 #' @author Michael Lawrence
 #'
 #' @examples
-#' \dontrun{
-#'   library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#'   library(GenomicFeatures)
-#'   exons <- exonsBy(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#'   mcols(asGFF(exons))
+#' \donttest{
+#' library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' library(GenomicFeatures)
+#' exons <- exonsBy(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' mcols(asGFF(exons))
 #' }
 #' @export
 setGeneric("asGFF", function(x, ...) standardGeneric("asGFF"))
