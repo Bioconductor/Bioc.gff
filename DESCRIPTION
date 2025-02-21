@@ -41,6 +41,8 @@ License: Artistic-2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+URL: https://github.com/Bioconductor/Bioc.gff
+BugReports: https://github.com/Bioconductor/Bioc.gff/issues
 Collate: 
     'Bioc.gff-package.R'
     'GFF-coercion.R'

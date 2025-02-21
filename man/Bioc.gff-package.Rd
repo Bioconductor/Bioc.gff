@@ -8,6 +8,14 @@
 \description{
 Parse GFF and GTF files using C++ classes. The package also provides utilities to read and write GFF3 files. The GFF (General Feature Format) format is a tab-delimited file format for describing genes and other features of DNA, RNA, and protein sequences. GFF files are often used to describe the features of genomes.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/Bioconductor/Bioc.gff}
+  \item Report bugs at \url{https://github.com/Bioconductor/Bioc.gff/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Bioconductor Package Maintainer \email{maintainer@bioconductor.org}
 
