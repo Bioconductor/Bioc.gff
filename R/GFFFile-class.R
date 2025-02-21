@@ -476,7 +476,7 @@ setMethod("export", c("GenomicRanges", "GFFFile"),
             write.table(table, con, sep = "\t", na = ".", quote = FALSE,
                         col.names = FALSE, row.names = FALSE, append = TRUE)
             if (index)
-              tracklayer:::indexTrack(file)
+              indexTrack(file)
             invisible(NULL)
           })
 

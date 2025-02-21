@@ -131,3 +131,34 @@ urlEncode <-
 {
     x[order(as.factor(seqnames(x)), start(x)), ]
 }
+
+## taken from rtracklayer:::uriIsLocal
+uriIsLocal <- function(x)
+{
+    x$scheme == "file" || x$scheme == ""
+}
+
+## taken from rtracklayer:::indexTrack
+#' @importFrom Rsamtools bgzip indexTabix TabixFile
+indexTrack <- function (con, ...)
+{
+    indexed <- NULL
+    formats <- eval(formals(indexTabix)$format)
+    uri <- path(con)
+    parsed_uri <- BiocIO:::.parseURI(uri)
+    if (!uriIsLocal(parsed_uri))
+        stop("'con' must be a path to a local file")
+    original_path <- parsed_uri$path
+    path <- bgzip(original_path, overwrite = TRUE)
+    format <- Find(function(f) {
+        is(con, paste(toupper(f), "File", sep = ""))
+    }, formats)
+    if (!is.null(format)) {
+        indexTabix(path, format, ...)
+    } else {
+        indexTabix(path, ...)
+    }
+    indexed <- TabixFile(path)
+    unlink(original_path)
+    invisible(indexed)
+}
