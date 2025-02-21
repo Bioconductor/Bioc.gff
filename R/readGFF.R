@@ -299,10 +299,14 @@ GFFcolnames <- function(GFF1=FALSE)
         return(logical(ntag))
     multi_tags <- c("Parent", "Alias", "Note",
                     "Dbxref", "Ontology_term")
-    sapply(seq_len(ntag) + ncol(df) - ntag,
-           function(j)
-               colnames(df)[[j]] %in% multi_tags ||
-               any(grepl(",", df[[j]], fixed=TRUE)))
+    vapply(
+        seq_len(ntag) + ncol(df) - ntag,
+        function(j) {
+            colnames(df)[[j]] %in% multi_tags ||
+                any(grepl(",", df[[j]], fixed=TRUE))
+        },
+        logical(1L)
+    )
 }
 
 urlDecode <- function(str, na.strings="NA")
