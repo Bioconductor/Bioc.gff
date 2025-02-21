@@ -215,7 +215,7 @@
 #'
 #' ## 'index'
 #' export(test, test_gff3_out, index = TRUE)
-#' test_bed_gz <- paste(test_gff3_out, ".gz", sep = "")
+#' test_bed_gz <- paste(test_gff3_out, ".bgz", sep = "")
 #' import(test_bed_gz, which = which)
 #' }
 #'
