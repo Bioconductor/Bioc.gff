@@ -111,7 +111,7 @@ singleGenome <-
     x1
 }
 
-## take from rtracklayer:::urlEncode
+## taken from rtracklayer:::urlEncode
 urlEncode <-
   function (str, chars = "-a-zA-Z0-9$_.+!*'(),", keep = TRUE)
 {
