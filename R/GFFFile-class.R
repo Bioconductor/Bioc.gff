@@ -445,7 +445,7 @@ setMethod("export", c("GenomicRanges", "GFFFile"),
                         x_char <- urlEncode(x_char, "%\t\n\r;=&,", FALSE)
                     if (is(x, "List")) {
                         x_char[is.na(x_char)] <- "."
-                        x_char <- pasteCollapse(relist(x_char, x))
+                        x_char <- pasteCollapse(IRanges::relist(x_char, x))
                         x_char[elementNROWS(x) == 0] <- NA
                     }
                     ## FIXME: add option so these become "." instead of removing
