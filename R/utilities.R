@@ -108,7 +108,7 @@ singleGenome <-
     x1 <- unname(unique(x))
     if (!isScalarCharacter(x1))
         stop("Multiple genomes encountered; only one supported")
-    x
+    x1
 }
 
 ## take from rtracklayer:::urlEncode
