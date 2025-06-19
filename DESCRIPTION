@@ -1,6 +1,7 @@
 Package: Bioc.gff
 Title: Read and write GFF and GTF files
 Version: 0.99.4
+Date: 2025-04-28
 Authors@R: c(
     person("Michael", "Lawrence", role = "aut"),
     person("Hervé", "Pagès", role = "aut"),
@@ -53,4 +54,3 @@ Collate:
     'index.R'
     'metadataFromNCBI.R'
     'utilities.R'
-Date: 2025-04-28
