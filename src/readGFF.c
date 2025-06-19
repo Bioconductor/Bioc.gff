@@ -1,7 +1,7 @@
 #include "XVector_interface.h"
 #include "S4Vectors_interface.h"
 
-#include <R_ext/Connections.h>  /* for R_ReadConnection() */
+#include <R_ext/Connections.h> /* for R_ReadConnection() and R_GetConnection() */
 
 #include <ctype.h>   /* for isspace() */
 #include <stdlib.h>  /* for strtod() */
@@ -26,8 +26,6 @@ static void print_elapsed_time()
  * filexp_gets2(): A version of filexp_gets() that also works on connections
  */
 
-Rconnection getConnection(int n);  /* not in <R_ext/Connections.h>, why? */
-
 static char con_buf[25000];
 static int con_buf_len, con_buf_offset;
 
@@ -48,7 +46,7 @@ static int filexp_gets2(SEXP filexp, char *buf, int buf_size, int *EOL_in_buf)
 	buf_offset = *EOL_in_buf = 0;
 	while (buf_offset < buf_size - 1) {
 		if (con_buf_offset == con_buf_len) {
-			con = getConnection(asInteger(filexp));
+			con = R_GetConnection(filexp);
 			con_buf_len = (int) R_ReadConnection(con,
 					con_buf,
 					sizeof(con_buf) / sizeof(char));
