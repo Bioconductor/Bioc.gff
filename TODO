@@ -1,0 +1,2 @@
+- Look for alternatives to `curl::curl_unescape`, `utils::URLdecode`
+  seems to perform much slower than curl.
