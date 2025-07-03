@@ -1,0 +1,156 @@
+---
+title: "Bioc.gff: GFF3 File Format Support"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+author: "Michael Lawrence"
+output: BiocStyle::html_document
+package: Bioc.gff
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    cache = TRUE,
+    comment = "#>"
+)
+library(BiocStyle)
+```
+
+# Bioc.gff
+
+The `r Biocpkg("Bioc.gff")` package provides support for the General Feature
+Format (GFF) file format, which is widely used for representing genomic features
+and annotations. This package allows users to read, write, and manipulate GFF
+versions 1, 2 (GTF), and 3 in R, making it easier to work with genomic data.
+
+Note that much of the code in the package is adapted from the
+`r Biocpkg("rtracklayer")` Bioconductor package. The `Bioc.gff` package is
+designed to be a lightweight alternative, focusing specifically on GFF file
+handling without the additional features of `rtracklayer`.
+
+# Installation
+
+You can install the `Bioc.gff` package from Bioconductor using the following:
+
+```{r install, eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("Bioc.gff")
+```
+
+# Loading packages
+
+```{r load}
+library(Bioc.gff)
+library(GenomicRanges)
+```
+
+# Usage
+
+The `Bioc.gff` package provides functions to read and write GFF files, as well
+as to manipulate GFF data structures. The following sections provide some
+examples of how to use the package.
+
+## Reading GFF Files
+
+You can read GFF files using the `readGFF` function. This function supports
+GFF versions 1, 2, and 3. The following example demonstrates how to read a GFF
+file:
+
+```{r find-gff}
+gff_file <- system.file("extdata", "genes.gff3", package = "Bioc.gff")
+```
+
+### Using the `import` function
+
+The `import` function deduces that the input string is a GFF file type and calls
+the appropriate method for reading the GFF file.
+
+```{r read-gff}
+import(gff_file)
+```
+
+Here the output object is a `GRanges` class, which contains genomic coordinates
+and associated metadata. The `GRanges` object indicates the ranges with the
+`seqnames`, `ranges`, and `strand`,  columns. The associated metadata is
+stored in the `mcols` slot, which (in this example) includes attributes like
+`source`, `type`, `phase`, `ID`, `Name`, `geneName`, `Alias` and `genome`.
+
+#### Selectively importing ranges
+
+You can also selectively import ranges from the GFF file using the `which`
+argument. This allows you to filter the data based on specific criteria, such as
+chromosome or strand. For example, to import only the ranges on chromosome 1:
+
+```{r read-gff-which}
+which <- GRanges("chr10:90000-93000")
+import(gff_file, which = which, genome = "hg19")
+```
+
+Note that you can indicate the genome build using the `genome` argument, which
+is useful for ensuring that the imported data is compatible with other genomic
+data you may be working with.
+
+### Using the `readGFF` function
+
+As an alternative, you can use the `readGFF` function directly, which is
+more explicit about the GFF version:
+
+```{r read-gff-version}
+readGFF(gff_file, version = "3")
+```
+
+This function returns a `DataFrame` object, which contains the same information
+as the `GRanges` object but in a tabular format. Note that one can use the
+`makeGRangesFromDataFrame` function to convert the `DataFrame` returned by
+`readGFF` into a `GRanges` object, which is often more convenient for downstream
+analysis:
+
+```{r read-gff-granges}
+readGFF(gff_file, version = "3") |>
+    makeGRangesFromDataFrame(
+        keep.extra.columns = TRUE
+    )
+```
+
+### Reading remote GFF files
+
+You can also read GFF files from remote URLs. The `import` function can handle
+URLs directly, allowing you to read GFF files hosted on remote servers. 
+On the Bioconductor Build System (BBS), we use the `BiocFileCache` package
+to cache remote files, which avoids downloading the file every time the code
+gets run.
+
+```{r read-gff-remote}
+library(BiocFileCache)
+bfc <- BiocFileCache::BiocFileCache()
+url <- "https://www.mirbase.org/download/hsa.gff3"
+bquery <- bfcquery(bfc, url, "rname", exact = TRUE)
+if (!nrow(bquery))
+    bfcdownload(x = bfc, rid = bquery[["rid"]], ask = FALSE)
+gff_remote <-
+    bfcrpath(bfc, rnames = url, exact = TRUE, download = FALSE, rtype = "web")
+readGFF(gff_remote)
+```
+
+Otherwise, you can read the remote GFF file directly using the `readGFF`
+function:
+
+```{r read-gff-remote-direct,eval=FALSE}
+readGFF(url, version = "3")
+```
+
+## Conversion to GFF
+
+```{r as-gff}
+library(GenomicFeatures)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+exonsBy(txdb, by = "tx") |>
+    asGFF()
+```
+
+# SessionInfo
+
+```{r session-info}
+sessionInfo()
+```
