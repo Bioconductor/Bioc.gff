@@ -39,30 +39,35 @@ setGeneric("asGFF", function(x, ...) standardGeneric("asGFF"))
 #' @importFrom S4Vectors values values<- elementNROWS
 #'
 #' @exportMethod asGFF
-setMethod("asGFF", "GRangesList",
-          function(x, parentType = "mRNA", childType = "exon") {
-            parent_range <- range(x)
-            if (!all(elementNROWS(parent_range) == 1))
-              stop("Elements in a group must be on same sequence and strand")
-            parents <- unlist(parent_range, use.names = FALSE)
-            children <- unlist(x, use.names = FALSE)
-            makeId <- function(x, prefix) {
-                paste(prefix, seq_len(length(x)), sep = "")
-            }
-            parentIds <- makeId(parents, parentType)
-            values(parents)$type <- parentType
-            values(parents)$ID <- parentIds
-            values(parents)$Name <- names(x)
-            values(children)$type <- childType
-            values(children)$ID <- makeId(children, childType)
-            values(children)$Name <- names(children)
-            values(children)$Parent <- rep.int(parentIds, elementNROWS(x))
-            allColumns <- union(colnames(values(parents)),
-                                colnames(values(children)))
-            values(children) <- rectifyDataFrame(values(children), allColumns)
-            values(parents) <- rectifyDataFrame(values(parents), allColumns)
-            c(parents, children)
-          })
+setMethod(
+    "asGFF",
+    "GRangesList",
+    function(x, parentType = "mRNA", childType = "exon") {
+        parent_range <- range(x)
+        if (!all(elementNROWS(parent_range) == 1))
+            stop("Elements in a group must be on same sequence and strand")
+        parents <- unlist(parent_range, use.names = FALSE)
+        children <- unlist(x, use.names = FALSE)
+        makeId <- function(x, prefix) {
+            paste(prefix, seq_len(length(x)), sep = "")
+        }
+        parentIds <- makeId(parents, parentType)
+        values(parents)$type <- parentType
+        values(parents)$ID <- parentIds
+        values(parents)$Name <- names(x)
+        values(children)$type <- childType
+        values(children)$ID <- makeId(children, childType)
+        values(children)$Name <- names(children)
+        values(children)$Parent <- rep.int(parentIds, elementNROWS(x))
+        allColumns <- union(
+            colnames(values(parents)),
+            colnames(values(children))
+        )
+        values(children) <- rectifyDataFrame(values(children), allColumns)
+        values(parents) <- rectifyDataFrame(values(parents), allColumns)
+        c(parents, children)
+    }
+)
 
 #' @importFrom S4Vectors DataFrame
 rectifyDataFrame <- function(x, allColumns) {
@@ -85,7 +90,7 @@ setGeneric("asGTF", function(x, ...) standardGeneric("asGTF"))
 #' @importFrom utils head
 frame <- function(x) {
     cs <- cumsum(width(x))
-    ucs <- unlist(cs, use.names=FALSE)
+    ucs <- unlist(cs, use.names = FALSE)
     ucs[end(PartitioningByEnd(x))] <- 0L
     ucs <- c(0L, head(ucs, -1L))
     ucs %% 3L
@@ -93,38 +98,37 @@ frame <- function(x) {
 
 #' @importFrom IRanges IRanges togroup
 #' @importFrom GenomicRanges mcols mcols<-
-setMethod("asGTF", "GRangesList",
-          function(x) {
-              tx_ids <- names(x)
-              if (is.null(tx_ids)) {
-                  tx_ids <- seq_along(x)
-              }
-              processFeatures <- function(f) {
-                  ans <- unlist(f, use.names=FALSE)
-                  ans$frame <- frame(f)
-                  if (is.null(ans$gene_id)) {
-                      ans$gene_id <- ""
-                  }
-                  if (is.null(ans$transcript_id)) {
-                      ans$transcript_id <- tx_ids[togroup(f)]
-                  }
-                  ans
-              }
-              start_codon_tx <-
-                  GenomicFeatures::pmapFromTranscripts(IRanges(1L, 3L), x)
-              start_codon <- processFeatures(start_codon_tx)
-              mcols(start_codon)$type <- "start_codon"
-              stop_ranges <- IRanges(end=sum(width(x)), width=3L)
-              stop_codon_tx <-
-                  GenomicFeatures::pmapFromTranscripts(stop_ranges, x)
-              stop_codon <- processFeatures(stop_codon_tx)
-              mcols(stop_codon)$type <- "stop_codon"
-              codons <- c(start_codon, stop_codon)
-              cds <- processFeatures(x)
-              mcols(cds)$type <- "CDS"
-              values(codons) <- rectifyDataFrame(values(codons), colnames(cds))
-              c(codons, cds)
-          })
+setMethod("asGTF", "GRangesList", function(x) {
+    tx_ids <- names(x)
+    if (is.null(tx_ids)) {
+        tx_ids <- seq_along(x)
+    }
+    processFeatures <- function(f) {
+        ans <- unlist(f, use.names = FALSE)
+        ans$frame <- frame(f)
+        if (is.null(ans$gene_id)) {
+            ans$gene_id <- ""
+        }
+        if (is.null(ans$transcript_id)) {
+            ans$transcript_id <- tx_ids[togroup(f)]
+        }
+        ans
+    }
+    start_codon_tx <-
+        GenomicFeatures::pmapFromTranscripts(IRanges(1L, 3L), x)
+    start_codon <- processFeatures(start_codon_tx)
+    mcols(start_codon)$type <- "start_codon"
+    stop_ranges <- IRanges(end = sum(width(x)), width = 3L)
+    stop_codon_tx <-
+        GenomicFeatures::pmapFromTranscripts(stop_ranges, x)
+    stop_codon <- processFeatures(stop_codon_tx)
+    mcols(stop_codon)$type <- "stop_codon"
+    codons <- c(start_codon, stop_codon)
+    cds <- processFeatures(x)
+    mcols(cds)$type <- "CDS"
+    values(codons) <- rectifyDataFrame(values(codons), colnames(cds))
+    c(codons, cds)
+})
 
 ## setMethod("asGTF", "TxDb",
 ##           function(x, by) {

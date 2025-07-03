@@ -19,7 +19,8 @@ setGeneric(
 ## necessary. Probably premature.
 
 setMethod(
-    "queryForResource", "BiocFile",
+    "queryForResource",
+    "BiocFile",
     function(manager, x, which = NULL, ...) {
         r <- resource(x)
         ans <- structure(r, usedWhich = FALSE)
@@ -27,7 +28,10 @@ setMethod(
             x_tbi <- paste(r, "tbi", sep = ".")
             if (file.exists(x_tbi))
                 ans <- queryForResource(
-                    manager, Rsamtools::TabixFile(r), which = which, ...
+                    manager,
+                    Rsamtools::TabixFile(r),
+                    which = which,
+                    ...
                 )
         }
         ans
@@ -42,14 +46,14 @@ manage <- BiocIO:::manage
 #' @importFrom BiocGenerics path
 #' @importClassesFrom Rsamtools TabixFile
 setMethod(
-    "queryForResource", "TabixFile",
+    "queryForResource",
+    "TabixFile",
     function(manager, x, which, header = TRUE, ...) {
         tabixHeader <- headerTabix(x)
         si <- Seqinfo(tabixHeader$seqnames)
         if (is.null(which)) {
             buffer <- connectionForResource(manager, path(x), "r")
-            if (!header)
-                readLines(buffer, tabixHeader$skip)
+            if (!header) readLines(buffer, tabixHeader$skip)
         } else {
             buffer <- manage(manager, file())
             if (header) {
@@ -57,7 +61,8 @@ setMethod(
                 writeLines(skippedLines, buffer)
             }
             lines <- unlist(
-                scanTabix(x, param = which), use.names = FALSE
+                scanTabix(x, param = which),
+                use.names = FALSE
             )
             writeLines(lines, buffer)
             si <- merge(si, seqinfo(which))

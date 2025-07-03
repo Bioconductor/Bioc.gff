@@ -102,21 +102,18 @@ NULL
 
 # readGFF() ---------------------------------------------------------------
 
-.make_filexp_from_filepath <- function(filepath)
-{
+.make_filexp_from_filepath <- function(filepath) {
     if (isSingleString(filepath))
         return(XVector:::open_input_files(filepath)[[1L]])
     if (!inherits(filepath, "connection"))
         stop(wmsg("'filepath' must be a single string or a connection"))
-    if (!base::isSeekable(filepath))
-        stop(wmsg("connection is not seekable"))
+    if (!base::isSeekable(filepath)) stop(wmsg("connection is not seekable"))
     filepath
 }
 
 # readGFFPragmas() --------------------------------------------------------
 
-readGFFPragmas <- function(filepath)
-{
+readGFFPragmas <- function(filepath) {
     filexp <- .make_filexp_from_filepath(filepath)
     if (inherits(filexp, "connection")) {
         if (!base::isOpen(filexp)) {
@@ -124,9 +121,14 @@ readGFFPragmas <- function(filepath)
             on.exit(base::close(filexp))
         }
         if (base::seek(filexp) != 0) {
-            warning(wmsg("connection is not positioned at the start ",
-                         "of the file, rewinding it"), immediate.=TRUE)
-            base::seek(filexp, where=0)
+            warning(
+                wmsg(
+                    "connection is not positioned at the start ",
+                    "of the file, rewinding it"
+                ),
+                immediate. = TRUE
+            )
+            base::seek(filexp, where = 0)
         }
     }
     .Call(read_gff_pragmas, filexp)
@@ -134,8 +136,7 @@ readGFFPragmas <- function(filepath)
 
 # sniffGFFVersion() -------------------------------------------------------
 
-.get_version_from_pragmas <- function(pragmas)
-{
+.get_version_from_pragmas <- function(pragmas) {
     attrcol_fmt <- attr(pragmas, "attrcol_fmt")
     idx <- grep("^##gff-version", pragmas)
     if (length(idx) == 0L) {
@@ -146,8 +147,10 @@ readGFFPragmas <- function(filepath)
     version <- sub("^##gff-version", "", pragmas[idx])
     version <- unique(trimws(version))
     if (length(version) > 1L) {
-        warning(wmsg("more than one GFF version specified in the file, ",
-                     "returning the first one"))
+        warning(wmsg(
+            "more than one GFF version specified in the file, ",
+            "returning the first one"
+        ))
         version <- version[[1L]]
     }
     version <- as.integer(version)
@@ -160,8 +163,7 @@ readGFFPragmas <- function(filepath)
     version
 }
 
-sniffGFFVersion <- function(filepath)
-{
+sniffGFFVersion <- function(filepath) {
     pragmas <- readGFFPragmas(filepath)
     .get_version_from_pragmas(pragmas)
 }
@@ -174,10 +176,8 @@ sniffGFFVersion <- function(filepath)
 #' @rdname readGFF
 #'
 #' @export
-GFFcolnames <- function(GFF1=FALSE)
-{
-    if (!isTRUEorFALSE(GFF1))
-        stop(wmsg("'GFF1' must be TRUE or FALSE"))
+GFFcolnames <- function(GFF1 = FALSE) {
+    if (!isTRUEorFALSE(GFF1)) stop(wmsg("'GFF1' must be TRUE or FALSE"))
     .Call(gff_colnames, GFF1)
 }
 
@@ -185,25 +185,24 @@ GFFcolnames <- function(GFF1=FALSE)
 
 ### Returns 0L, 1L, 2L, or 3L.
 #' @importFrom S4Vectors isSingleNumber
-.normarg_version <- function(version=0)
-{
+.normarg_version <- function(version = 0) {
     if (is.character(version)) {
         ## For compatibility with "import" method for GFFFile objects.
-        if (length(version) == 0L)
-            return(0L)
+        if (length(version) == 0L) return(0L)
         if (isSingleString(version)) {
             IMPORT_STYLE_VERSIONS <- c("", "1", "2", "3")
             m <- match(version, IMPORT_STYLE_VERSIONS)
             if (is.na(m))
-                stop(wmsg("when a single string, 'version' must ",
-                          "be \"\", \"1\", \"2\", or \"3\""))
+                stop(wmsg(
+                    "when a single string, 'version' must ",
+                    "be \"\", \"1\", \"2\", or \"3\""
+                ))
             version <- m - 1L
             return(version)
         }
     }
     if (isSingleNumber(version)) {
-        if (!is.integer(version))
-            version <- as.integer(version)
+        if (!is.integer(version)) version <- as.integer(version)
         if (version < 0L || version > 3L)
             stop(wmsg("'version' must be 0, 1, 2, or 3"))
         return(version)
@@ -211,8 +210,11 @@ GFFcolnames <- function(GFF1=FALSE)
     stop(wmsg("'version' must be a single number"))
 }
 
-.prepare_colmap_and_tags <- function(columns=NULL, tags=NULL, attrcol_fmt=0L)
-{
+.prepare_colmap_and_tags <- function(
+    columns = NULL,
+    tags = NULL,
+    attrcol_fmt = 0L
+) {
     ## Check 'columns'.
     if (!(is.null(columns) || is.character(columns)))
         stop(wmsg("'columns' must be NULL or a character vector"))
@@ -246,9 +248,12 @@ GFFcolnames <- function(GFF1=FALSE)
         }
     } else if (is.character(columns)) {
         if (!all(columns %in% GFF_colnames)) {
-            in1string <- paste0(GFF_colnames, collapse=", ")
-            stop(wmsg("'columns' must contain valid GFF columns. ",
-                      "Valid GFF columns are: ", in1string))
+            in1string <- paste0(GFF_colnames, collapse = ", ")
+            stop(wmsg(
+                "'columns' must contain valid GFF columns. ",
+                "Valid GFF columns are: ",
+                in1string
+            ))
         }
         if (anyDuplicated(columns))
             stop(wmsg("'columns' cannot contain duplicates"))
@@ -257,34 +262,34 @@ GFFcolnames <- function(GFF1=FALSE)
         stop(wmsg("'columns' must be NULL or a character vector"))
     }
 
-    list(colmap=colmap, tags=tags)
+    list(colmap = colmap, tags = tags)
 }
 
-.normarg_filter <- function(filter, attrcol_fmt=0L)
-{
+.normarg_filter <- function(filter, attrcol_fmt = 0L) {
     GFF_colnames <- GFFcolnames(attrcol_fmt == 1L)
-    if (is.null(filter))
-        return(NULL)
-    if (!is.list(filter))
-        stop(wmsg("'filter' must be NULL or a named list"))
+    if (is.null(filter)) return(NULL)
+    if (!is.list(filter)) stop(wmsg("'filter' must be NULL or a named list"))
     filter_names <- names(filter)
-    if (is.null(filter_names))
-        stop(wmsg("'filter' must have names"))
+    if (is.null(filter_names)) stop(wmsg("'filter' must have names"))
     if (attrcol_fmt == 1L) {
         valid_filter_names <- GFF_colnames
     } else {
-        valid_filter_names <- head(GFF_colnames, n=-1L)
+        valid_filter_names <- head(GFF_colnames, n = -1L)
     }
     if (!all(filter_names %in% valid_filter_names)) {
-        in1string <- paste0(valid_filter_names, collapse=", ")
+        in1string <- paste0(valid_filter_names, collapse = ", ")
         if (attrcol_fmt == 1L) {
             excluding_note <- ""
         } else {
             excluding_note <- "(excluding \"attributes\")"
         }
-        stop(wmsg("The names on 'filter' must be valid GFF columns ",
-                  excluding_note, ". ",
-                  "Valid 'filter' names: ", in1string))
+        stop(wmsg(
+            "The names on 'filter' must be valid GFF columns ",
+            excluding_note,
+            ". ",
+            "Valid 'filter' names: ",
+            in1string
+        ))
     }
     if (anyDuplicated(filter_names))
         stop(wmsg("the names on 'filter' must be unique"))
@@ -293,27 +298,23 @@ GFFcolnames <- function(GFF1=FALSE)
 
 ### 'df' must be a data-frame-like object (typically an ordinary data frame or
 ### a DataFrame object).
-.is_multi_tag <- function(df, ntag, attrcol_fmt=0L)
-{
-    if (ntag == 0L || attrcol_fmt != 3L)
-        return(logical(ntag))
-    multi_tags <- c("Parent", "Alias", "Note",
-                    "Dbxref", "Ontology_term")
+.is_multi_tag <- function(df, ntag, attrcol_fmt = 0L) {
+    if (ntag == 0L || attrcol_fmt != 3L) return(logical(ntag))
+    multi_tags <- c("Parent", "Alias", "Note", "Dbxref", "Ontology_term")
     vapply(
         seq_len(ntag) + ncol(df) - ntag,
         function(j) {
-            colnames(df)[[j]] %in% multi_tags ||
-                any(grepl(",", df[[j]], fixed=TRUE))
+            colnames(df)[[j]] %in%
+                multi_tags ||
+                any(grepl(",", df[[j]], fixed = TRUE))
         },
         logical(1L)
     )
 }
 
-urlDecode <- function(str, na.strings="NA")
-{
+urlDecode <- function(str, na.strings = "NA") {
     ans <- curl::curl_unescape(str)
-    if (!identical(na.strings, "NA"))
-        ans[is.na(str)] <- na.strings
+    if (!identical(na.strings, "NA")) ans[is.na(str)] <- na.strings
     ans
 }
 
@@ -323,11 +324,11 @@ urlDecode <- function(str, na.strings="NA")
 ### vectors.
 
 #' @importFrom stats setNames
-.url_decode_cols <- function(df, decode_idx)
-{
-    decoded_cols <- lapply(setNames(decode_idx, colnames(df)[decode_idx]),
-                           function(j)
-                               urlDecode(df[[j]], na.strings=NA_character_))
+.url_decode_cols <- function(df, decode_idx) {
+    decoded_cols <- lapply(
+        setNames(decode_idx, colnames(df)[decode_idx]),
+        function(j) urlDecode(df[[j]], na.strings = NA_character_)
+    )
     df[decode_idx] <- decoded_cols
     df
 }
@@ -337,41 +338,48 @@ urlDecode <- function(str, na.strings="NA")
 ### indicating which columns to split. The columns to split must be character
 ### vectors. Split values are passed thru urlDecode() unless 'raw_data' is
 ### TRUE. Always returns a DataFrame.
-.strsplit_cols <- function(df, split_idx, raw_data)
-{
-    split_cols <- lapply(setNames(split_idx, colnames(df)[split_idx]),
-                         function(j) {
-                             col <- df[[j]]
-                             ## Probably the most efficient way to create an empty CharacterList
-                             ## of arbitrary length.
-                             split_col <- relist(character(0),
-                                                 PartitioningByEnd(rep.int(0L, length(col))))
-                             not_na <- !is.na(col)
-                             tmp <- strsplit(col[not_na], ",", fixed=TRUE)
-                             split_col[not_na] <- IRanges::CharacterList(tmp)
-                             if (raw_data)
-                                 return(split_col)
-                             relist(urlDecode(unlist(split_col)), split_col)
-                         })
+.strsplit_cols <- function(df, split_idx, raw_data) {
+    split_cols <- lapply(
+        setNames(split_idx, colnames(df)[split_idx]),
+        function(j) {
+            col <- df[[j]]
+            ## Probably the most efficient way to create an empty CharacterList
+            ## of arbitrary length.
+            split_col <- relist(
+                character(0),
+                PartitioningByEnd(rep.int(0L, length(col)))
+            )
+            not_na <- !is.na(col)
+            tmp <- strsplit(col[not_na], ",", fixed = TRUE)
+            split_col[not_na] <- IRanges::CharacterList(tmp)
+            if (raw_data) return(split_col)
+            relist(urlDecode(unlist(split_col)), split_col)
+        }
+    )
     ## Surprisingly sticking the CharacterList cols back into 'df' works
     ## even if 'df' is an ordinary data frame!
     df[split_idx] <- split_cols
-    ans <- DataFrame(df, check.names=FALSE)
+    ans <- DataFrame(df, check.names = FALSE)
     ## "show" method for DataFrame is broken if some colnames are the empty
     ## string so we rename this column (in our case, we know there can only
     ## be one).
     m <- match("", colnames(ans))
-    if (!is.na(m))
-        colnames(ans)[m] <- "__empty_tag__"
+    if (!is.na(m)) colnames(ans)[m] <- "__empty_tag__"
     ans
 }
 
 #' @rdname readGFF
 #'
 #' @export
-readGFF <- function(filepath, version=0, columns=NULL, tags=NULL,
-                    filter=NULL, nrows=-1, raw_data=FALSE)
-{
+readGFF <- function(
+    filepath,
+    version = 0,
+    columns = NULL,
+    tags = NULL,
+    filter = NULL,
+    nrows = -1,
+    raw_data = FALSE
+) {
     ## Check 'filepath'.
     filexp <- .make_filexp_from_filepath(filepath)
     if (inherits(filexp, "connection")) {
@@ -380,9 +388,14 @@ readGFF <- function(filepath, version=0, columns=NULL, tags=NULL,
             on.exit(base::close(filexp))
         }
         if (base::seek(filexp) != 0) {
-            warning(wmsg("connection is not positioned at the start ",
-                         "of the file, rewinding it"), immediate.=TRUE)
-            base::seek(filexp, where=0)
+            warning(
+                wmsg(
+                    "connection is not positioned at the start ",
+                    "of the file, rewinding it"
+                ),
+                immediate. = TRUE
+            )
+            base::seek(filexp, where = 0)
         }
     }
 
@@ -394,7 +407,7 @@ readGFF <- function(filepath, version=0, columns=NULL, tags=NULL,
 
     ## Rewind file.
     if (inherits(filexp, "connection")) {
-        base::seek(filexp, where=0)
+        base::seek(filexp, where = 0)
     } else {
         XVector:::rewind_filexp(filexp)
     }
@@ -414,34 +427,38 @@ readGFF <- function(filepath, version=0, columns=NULL, tags=NULL,
     filter <- .normarg_filter(filter, attrcol_fmt)
 
     ## Normalize 'nrows'.
-    if (!isSingleNumber(nrows))
-        stop(wmsg("'nrows' must be a single number"))
-    if (!is.integer(nrows))
-        nrows <- as.integer(nrows)
+    if (!isSingleNumber(nrows)) stop(wmsg("'nrows' must be a single number"))
+    if (!is.integer(nrows)) nrows <- as.integer(nrows)
 
     ## Check 'raw_data'.
-    if (!isTRUEorFALSE(raw_data))
-        stop(wmsg("'raw_data' must be TRUE or FALSE"))
+    if (!isTRUEorFALSE(raw_data)) stop(wmsg("'raw_data' must be TRUE or FALSE"))
 
     ## 1st pass.
     scan_ans <- .Call(scan_gff, filexp, attrcol_fmt, tags, filter, nrows)
-    if (is.null(tags))
-        tags <- scan_ans[[1L]]
+    if (is.null(tags)) tags <- scan_ans[[1L]]
     nrows <- scan_ans[[2L]]
 
     ## Rewind file.
     if (inherits(filexp, "connection")) {
-        base::seek(filexp, where=0)
+        base::seek(filexp, where = 0)
     } else {
         XVector:::rewind_filexp(filexp)
     }
 
     ## 2nd pass: return 'ans' as an ordinary data frame.
-    ans <- .Call(load_gff, filexp, attrcol_fmt, tags, filter,
-                 nrows, pragmas,
-                 colmap, raw_data)
+    ans <- .Call(
+        load_gff,
+        filexp,
+        attrcol_fmt,
+        tags,
+        filter,
+        nrows,
+        pragmas,
+        colmap,
+        raw_data
+    )
     ncol0 <- attr(ans, "ncol0")
-    ntag <- attr(ans, "ntag")          # should be the same as 'length(tags)'
+    ntag <- attr(ans, "ntag") # should be the same as 'length(tags)'
 
     ## Post-process standard GFF cols.
     if (!raw_data) {
@@ -452,11 +469,12 @@ readGFF <- function(filepath, version=0, columns=NULL, tags=NULL,
             #factor_colnames <- c("seqid", "source", "type", "strand")
             factor_colnames <- c("seqid", "source", "type")
         }
-        m <- match(factor_colnames, head(colnames(ans), n=ncol0))
+        m <- match(factor_colnames, head(colnames(ans), n = ncol0))
         m <- m[!is.na(m)]
-        factor_cols <- lapply(setNames(m, colnames(ans)[m]),
-                              function(j)
-                                  factor(ans[[j]], levels=unique(ans[[j]])))
+        factor_cols <- lapply(
+            setNames(m, colnames(ans)[m]),
+            function(j) factor(ans[[j]], levels = unique(ans[[j]]))
+        )
         ans[m] <- factor_cols
     }
 
@@ -479,16 +497,12 @@ readGFF <- function(filepath, version=0, columns=NULL, tags=NULL,
     ## turned into a DataFrame), so we restore them and cross our fingers that
     ## they won't clash with the DataFrame slots the day the internals of
     ## DataFrame objects happen to change (very unlikely though).
-    if (is.null(attr(ans, "pragmas")))
-        attr(ans, "pragmas") <- pragmas
+    if (is.null(attr(ans, "pragmas"))) attr(ans, "pragmas") <- pragmas
     if (is.null(attr(ans, "attrcol_fmt")))
         attr(ans, "attrcol_fmt") <- attrcol_fmt
-    if (is.null(attr(ans, "ncol0")))
-        attr(ans, "ncol0") <- ncol0
-    if (is.null(attr(ans, "ntag")))
-        attr(ans, "ntag") <- ntag
-    if (is.null(attr(ans, "raw_data")))
-        attr(ans, "raw_data") <- raw_data
+    if (is.null(attr(ans, "ncol0"))) attr(ans, "ncol0") <- ncol0
+    if (is.null(attr(ans, "ntag"))) attr(ans, "ntag") <- ntag
+    if (is.null(attr(ans, "raw_data"))) attr(ans, "raw_data") <- raw_data
     ans
 }
 
@@ -501,35 +515,41 @@ readGFF <- function(filepath, version=0, columns=NULL, tags=NULL,
 #' @importFrom utils read.table
 #' @importFrom GenomeInfoDb Seqinfo
 .parseSequenceRegionsAsSeqinfo <- function(lines) {
-    sr <- grep("##sequence-region", lines, value=TRUE)
+    sr <- grep("##sequence-region", lines, value = TRUE)
     srcon <- file()
     on.exit(base::close(srcon))
     writeLines(sr, srcon)
-    srt <- read.table(srcon, comment.char="",
-                      colClasses=list(NULL, "character", "integer",
-                                      "integer"))
+    srt <- read.table(
+        srcon,
+        comment.char = "",
+        colClasses = list(NULL, "character", "integer", "integer")
+    )
     if (any(srt[[2L]] != 1L)) {
-        warning("One or more ##sequence-region directives do not start at 1. ",
-                "The assumptions made by 'sequenceRegionsAsSeqinfo=TRUE' ",
-                "have been violated.")
+        warning(
+            "One or more ##sequence-region directives do not start at 1. ",
+            "The assumptions made by 'sequenceRegionsAsSeqinfo=TRUE' ",
+            "have been violated."
+        )
     }
     Seqinfo(srt[[1L]], srt[[3L]])
 }
 
 ### -- by Michael, updated by Marcel
 .parseSpeciesAsMetadata <- function(lines) {
-    species <- unique(grep("##species", lines, fixed=TRUE, value=TRUE))
-    if (length(species) > 1L)
-        stop("multiple species definitions found")
+    species <- unique(grep("##species", lines, fixed = TRUE, value = TRUE))
+    if (length(species) > 1L) stop("multiple species definitions found")
     metadata <- list()
     if (identical(length(species), 1L)) {
-        species <- sub("##species ", "", species, fixed=TRUE)
+        species <- sub("##species ", "", species, fixed = TRUE)
         if (isNCBISpeciesURL(species))
-            metadata <- tryCatch({
-                metadataFromNCBI(species)
-            }, error = function(e) {
-                warning("failed to retrieve organism information from NCBI")
-            })
+            metadata <- tryCatch(
+                {
+                    metadataFromNCBI(species)
+                },
+                error = function(e) {
+                    warning("failed to retrieve organism information from NCBI")
+                }
+            )
     }
     metadata
 }
@@ -537,14 +557,20 @@ readGFF <- function(filepath, version=0, columns=NULL, tags=NULL,
 #' @importFrom GenomeInfoDb seqlevels seqlevels<- seqinfo<- genome<-
 #' @importFrom S4Vectors isSingleStringOrNA metadata<-
 #' @importFrom GenomicRanges makeGRangesFromDataFrame
-readGFFAsGRanges <- function(filepath, version=0, colnames=NULL, filter=NULL,
-                             genome=NA,
-                             sequenceRegionsAsSeqinfo=FALSE,
-                             speciesAsMetadata=FALSE)
-{
+readGFFAsGRanges <- function(
+    filepath,
+    version = 0,
+    colnames = NULL,
+    filter = NULL,
+    genome = NA,
+    sequenceRegionsAsSeqinfo = FALSE,
+    speciesAsMetadata = FALSE
+) {
     if (!(isSingleStringOrNA(genome) || is(genome, "Seqinfo")))
-        stop(wmsg("'genome' must be a single string or NA, ",
-                  "or a Seqinfo object"))
+        stop(wmsg(
+            "'genome' must be a single string or NA, ",
+            "or a Seqinfo object"
+        ))
     if (!isTRUEorFALSE(sequenceRegionsAsSeqinfo))
         stop(wmsg("'sequenceRegionsAsSeqinfo' must be TRUE or FALSE"))
     if (!isTRUEorFALSE(speciesAsMetadata))
@@ -552,7 +578,7 @@ readGFFAsGRanges <- function(filepath, version=0, colnames=NULL, filter=NULL,
 
     ## Read as data frame.
     if (is.null(colnames)) {
-        df <- readGFF(filepath, version=version, filter=filter)
+        df <- readGFF(filepath, version = version, filter = filter)
     } else {
         if (!is.character(colnames))
             stop(wmsg("'colnames' must be a character vector"))
@@ -562,19 +588,27 @@ readGFFAsGRanges <- function(filepath, version=0, colnames=NULL, filter=NULL,
         tags <- setdiff(colnames, GFF_colnames)
         core_columns <- c("seqid", "start", "end", "strand")
         columns <- union(columns, core_columns)
-        df <- readGFF(filepath, version=version,
-                      columns=columns, tags=tags, filter=filter)
+        df <- readGFF(
+            filepath,
+            version = version,
+            columns = columns,
+            tags = tags,
+            filter = filter
+        )
     }
 
     ## Turn data frame into GRanges.
     ## TODO: Maybe we should be able to pass the metadata to
     ## makeGRangesFromDataFrame()?
     if (is.null(colnames)) {
-        ans <- makeGRangesFromDataFrame(df, keep.extra.columns=TRUE,
-                                        seqnames.field="seqid")
+        ans <- makeGRangesFromDataFrame(
+            df,
+            keep.extra.columns = TRUE,
+            seqnames.field = "seqid"
+        )
     } else {
-        ans <- makeGRangesFromDataFrame(df, seqnames.field="seqid")
-        mcols(ans) <- df[ , colnames, drop=FALSE]
+        ans <- makeGRangesFromDataFrame(df, seqnames.field = "seqid")
+        mcols(ans) <- df[, colnames, drop = FALSE]
     }
 
     ## Set seqinfo.
@@ -587,20 +621,27 @@ readGFFAsGRanges <- function(filepath, version=0, colnames=NULL, filter=NULL,
     } else if (is(genome, "Seqinfo")) {
         ans_seqinfo <- genome
         if (!all(seqlevels(ans) %in% seqlevels(ans_seqinfo)))
-            stop(wmsg("the sequence names in the GTF or GFF file are in ",
-                      "disagreement with the Seqinfo object specified via ",
-                      "the 'genome' argument"))
+            stop(wmsg(
+                "the sequence names in the GTF or GFF file are in ",
+                "disagreement with the Seqinfo object specified via ",
+                "the 'genome' argument"
+            ))
     } else if (isSingleString(genome)) {
         ans_seqinfo <- GenomeInfoDb::Seqinfo(genome = genome)
-        if (!is.null(ans_seqinfo) &&
-            !all(seqlevels(ans) %in% seqlevels(ans_seqinfo)))
-        {
-            warning(wmsg("cannot set the seqlengths or circularity flags on ",
-                         "the GRanges object to return because the sequence ",
-                         "names in the GTF or GFF file are in disagreement ",
-                         "with the sequence names implied by the genome ",
-                         "assembly (", genome, ") specified via the 'genome' ",
-                         "argument"))
+        if (
+            !is.null(ans_seqinfo) &&
+                !all(seqlevels(ans) %in% seqlevels(ans_seqinfo))
+        ) {
+            warning(wmsg(
+                "cannot set the seqlengths or circularity flags on ",
+                "the GRanges object to return because the sequence ",
+                "names in the GTF or GFF file are in disagreement ",
+                "with the sequence names implied by the genome ",
+                "assembly (",
+                genome,
+                ") specified via the 'genome' ",
+                "argument"
+            ))
             ans_seqinfo <- NULL
         }
     }
@@ -608,8 +649,7 @@ readGFFAsGRanges <- function(filepath, version=0, colnames=NULL, filter=NULL,
         seqlevels(ans) <- seqlevels(ans_seqinfo)
         seqinfo(ans) <- ans_seqinfo
     }
-    if (isSingleString(genome))
-        genome(ans) <- genome
+    if (isSingleString(genome)) genome(ans) <- genome
 
     ## Get 'ans_metadata' from pragmas.
     if (speciesAsMetadata) {
