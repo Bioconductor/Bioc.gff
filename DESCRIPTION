@@ -32,9 +32,11 @@ Imports:
   utils,
   XVector
 Suggests:
+  BiocFileCache,
   GenomicFeatures,
   httr2,
   rvest,
+  txdbmaker,
   TxDb.Hsapiens.UCSC.hg19.knownGene
 LinkingTo:
   S4Vectors,

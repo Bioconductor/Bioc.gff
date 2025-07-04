@@ -126,7 +126,7 @@ bfc <- BiocFileCache::BiocFileCache()
 url <- "https://www.mirbase.org/download/hsa.gff3"
 bquery <- bfcquery(bfc, url, "rname", exact = TRUE)
 if (!nrow(bquery))
-    bfcdownload(x = bfc, rid = bquery[["rid"]], ask = FALSE)
+    bfcadd(x = bfc, rname = url, rtype = "web", download = TRUE)
 gff_remote <-
     bfcrpath(bfc, rnames = url, exact = TRUE, download = FALSE, rtype = "web")
 readGFF(gff_remote)
@@ -147,6 +147,30 @@ library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 exonsBy(txdb, by = "tx") |>
     asGFF()
+```
+
+## GFF to TxDb
+
+You can convert a `GFF` object to a `TxDb` object using the `makeTxDbFromGFF`
+in the `r Biocpkg("txdbmaker")` package. This is useful for creating a
+transcript database from GFF annotations, which can then be used for various
+genomic analyses.
+
+```{r make-txdb-from-gff}
+library(txdbmaker)
+txdb <- makeTxDbFromGFF(
+    file = gff_remote,
+    format = "gff3",
+    dataSource = "https://www.mirbase.org/download/hsa.gff3",
+    organism = "Homo sapiens",
+    taxonomyId = 9606
+)
+genome <- grepv("genome-build-id", readLines(gff_remote)) |>
+    strsplit("# genome-build-id:\\s+") |>
+    unlist() |>
+    tail(1L)
+genome(txdb) <- genome
+txdb
 ```
 
 # SessionInfo
