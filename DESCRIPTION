@@ -33,11 +33,15 @@ Imports:
   XVector
 Suggests:
   BiocFileCache,
+  BiocStyle,
   GenomicFeatures,
+  knitr,
   httr2,
+  rmarkdown,
   rvest,
   txdbmaker,
   TxDb.Hsapiens.UCSC.hg19.knownGene
+VignetteBuilder: knitr
 LinkingTo:
   S4Vectors,
   XVector,

@@ -1,8 +1,15 @@
 ---
 title: "Bioc.gff: GFF3 File Format Support"
-date: "`r format(Sys.Date(), '%B %d, %Y')`"
 author: "Michael Lawrence"
-output: BiocStyle::html_document
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteIndexEntry{Bioc.gff: GFF3 File Format Support}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    number_sections: yes
+    toc: true
 package: Bioc.gff
 ---
 
