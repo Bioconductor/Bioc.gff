@@ -41,7 +41,7 @@ setMethod(
 connectionForResource <- BiocIO:::connectionForResource
 manage <- BiocIO:::manage
 
-#' @importFrom GenomeInfoDb seqinfo
+#' @importFrom Seqinfo seqinfo
 #' @importFrom Rsamtools headerTabix scanTabix
 #' @importFrom BiocGenerics path
 #' @importClassesFrom Rsamtools TabixFile

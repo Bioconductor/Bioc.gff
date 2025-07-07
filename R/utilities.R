@@ -31,7 +31,7 @@ gffGenomeBuild <- function(x) {
     unlist(strsplit(genome_build, "\t", fixed = TRUE))
 }
 
-#' @importFrom GenomeInfoDb provider providerVersion genome
+#' @importFrom Seqinfo provider providerVersion genome
 setMethod("provider", "GFFFile", function(x) {
     gffGenomeBuild(x)[1]
 })

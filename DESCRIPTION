@@ -22,12 +22,12 @@ Imports:
   BiocGenerics,
   BiocIO,
   curl,
-  GenomeInfoDb,
   GenomicRanges,
   IRanges,
   methods,
   Rsamtools,
   S4Vectors,
+  Seqinfo,
   stats,
   utils,
   XVector

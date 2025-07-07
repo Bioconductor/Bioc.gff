@@ -347,7 +347,7 @@ setMethod(
 #' @describeIn GFFFile-class
 #'
 #' @importFrom BiocIO resource
-#' @importFrom GenomeInfoDb genome seqnames
+#' @importFrom Seqinfo genome seqnames
 #' @importFrom BiocGenerics start
 #' @importFrom utils packageVersion relist write.table
 #' @importFrom S4Vectors wmsg

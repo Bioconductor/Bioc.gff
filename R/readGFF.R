@@ -513,7 +513,7 @@ readGFF <- function(
 
 ### sequence-region => Seqinfo -- by Michael
 #' @importFrom utils read.table
-#' @importFrom GenomeInfoDb Seqinfo
+#' @importFrom Seqinfo Seqinfo
 .parseSequenceRegionsAsSeqinfo <- function(lines) {
     sr <- grep("##sequence-region", lines, value = TRUE)
     srcon <- file()
@@ -554,7 +554,7 @@ readGFF <- function(
     metadata
 }
 
-#' @importFrom GenomeInfoDb seqlevels seqlevels<- seqinfo<- genome<-
+#' @importFrom Seqinfo seqlevels seqlevels<- seqinfo<- genome<-
 #' @importFrom S4Vectors isSingleStringOrNA metadata<-
 #' @importFrom GenomicRanges makeGRangesFromDataFrame
 readGFFAsGRanges <- function(
@@ -627,7 +627,7 @@ readGFFAsGRanges <- function(
                 "the 'genome' argument"
             ))
     } else if (isSingleString(genome)) {
-        ans_seqinfo <- GenomeInfoDb::Seqinfo(genome = genome)
+        ans_seqinfo <- Seqinfo::Seqinfo(genome = genome)
         if (
             !is.null(ans_seqinfo) &&
                 !all(seqlevels(ans) %in% seqlevels(ans_seqinfo))
