@@ -30,10 +30,19 @@ Format (GFF) file format, which is widely used for representing genomic features
 and annotations. This package allows users to read, write, and manipulate GFF
 versions 1, 2 (GTF), and 3 in R, making it easier to work with genomic data.
 
-Note that much of the code in the package is adapted from the
-`r Biocpkg("rtracklayer")` Bioconductor package. The `Bioc.gff` package is
-designed to be a lightweight alternative, focusing specifically on GFF file
-handling without the additional features of `rtracklayer`.
+While the `r Biocpkg("rtracklayer")` package offers robust GFF support, it is a
+large package with many features beyond file import. `Bioc.gff` fills a specific
+niche in the Bioconductor ecosystem by providing a lightweight, focused solution
+with minimal dependencies. This modularity is beneficial for developers of other
+packages who need to parse GFF files without inheriting the extensive dependency
+footprint of `rtracklayer`. For the end user, it offers a simple and direct
+interface for GFF manipulation.
+
+Note that much of the code in the package is ported and adapted from the
+`r Biocpkg("rtracklayer")` Bioconductor package. The intention is that the GFF
+functionality residing in `r Biocpkg("rtracklayer")` will be removed from 
+that package in favor of using `Bioc.gff`, thereby reducing its size and
+complexity.
 
 # Installation
 
