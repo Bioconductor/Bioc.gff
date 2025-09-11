@@ -94,7 +94,7 @@ frame <- function(x) {
     ucs %% 3L
 }
 
-#' @importFrom IRanges IRanges togroup
+#' @importFrom IRanges IRanges togroup PartitioningByWidth
 #' @importFrom GenomicRanges mcols mcols<-
 setMethod("asGTF", "GRangesList", function(x) {
     tx_ids <- names(x)
@@ -108,7 +108,7 @@ setMethod("asGTF", "GRangesList", function(x) {
             ans$gene_id <- ""
         }
         if (is.null(ans$transcript_id)) {
-            ans$transcript_id <- tx_ids[togroup(f)]
+            ans$transcript_id <- tx_ids[togroup(PartitioningByWidth(f))]
         }
         ans
     }
