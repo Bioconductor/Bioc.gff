@@ -335,7 +335,6 @@ library(GenomicRanges)
 which <- GRanges("chr10:90000-93000")
 import(test_gff3, which = which)
 
-\donttest{
 ## 'append'
 test_gff3_out <- file.path(tempdir(), "genes.gff3")
 
@@ -347,7 +346,11 @@ import(test_gff3_out)
 export(test, test_gff3_out, index = TRUE)
 test_bed_gz <- paste(test_gff3_out, ".bgz", sep = "")
 import(test_bed_gz, which = which)
-}
+
+## cleanup
+file.remove(
+    test_gff3_out, test_bed_gz, paste(test_bed_gz, "tbi", sep = ".")
+)
 
 }
 \references{
