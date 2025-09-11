@@ -23,6 +23,8 @@ library(BiocStyle)
 
 # Bioc.gff
 
+## Introduction
+
 The `r Biocpkg("Bioc.gff")` package provides support for the General Feature
 Format (GFF) file format, which is widely used for representing genomic features
 and annotations. This package allows users to read, write, and manipulate GFF
