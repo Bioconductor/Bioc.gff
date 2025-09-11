@@ -150,6 +150,15 @@ import(url, version = "3")
 
 ## Conversion to GFF
 
+While `TxDb` objects are highly efficient for querying transcript annotations
+within R, it is often necessary to export this data to a standard, portable
+format for use with external tools or for sharing with collaborators. The GFF3
+format is a widely accepted standard for this purpose. Converting a `TxDb` or a
+derivative object (like a `GRangesList` of exons) into a GFF3-compatible
+`GRanges` object allows for easy export. This is particularly useful for
+visualizing annotations in genome browsers like IGV or UCSC, or for input into
+downstream analysis pipelines that expect GFF3 files.
+
 ```{r as-gff}
 library(GenomicFeatures)
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
