@@ -51,8 +51,9 @@ A \code{DataFrame} with columns corresponding to those in the GFF.
 }
 \description{
 Reads a file in GFF format and creates a data frame or
-\code{\link[S4Vectors:DataFrame-class]{S4Vectors::DataFrame()}} object from it. This is a low-level function that
-should not be called by user code.
+\code{\link[S4Vectors:DataFrame-class]{S4Vectors::DataFrame()}} object from it. This is a lower-level function
+that should not be called by the end user. Users are recommended to use
+the \code{import()} function on the \code{GFFFile} or file path.
 }
 \examples{
 

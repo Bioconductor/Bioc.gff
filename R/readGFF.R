@@ -3,8 +3,9 @@
 #' @title Reads a file in GFF format
 #'
 #' @description Reads a file in GFF format and creates a data frame or
-#'   [S4Vectors::DataFrame()] object from it. This is a low-level function that
-#'   should not be called by user code.
+#'   [S4Vectors::DataFrame()] object from it. This is a lower-level function
+#'   that should not be called by the end user. Users are recommended to use
+#'   the `import()` function on the `GFFFile` or file path.
 #'
 #' @aliases readGFF GFFcolnames
 #'
