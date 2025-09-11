@@ -1,9 +1,5 @@
 # Utilities ---------------------------------------------------------------
 
-connection <- BiocIO:::connection
-manager <- BiocIO:::manager
-release <- BiocIO:::release
-
 scanGFFDirectives <- function(con, tag = NULL) {
     m <- manager()
     con <- connection(m, con, "r")
