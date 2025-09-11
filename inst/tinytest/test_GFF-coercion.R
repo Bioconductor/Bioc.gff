@@ -1,4 +1,5 @@
 library(GenomicRanges)
+library(tinytest)
 
 ## Test asGFF on a simple GRangesList
 grl <- GRangesList(
