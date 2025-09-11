@@ -68,11 +68,8 @@ parseTaxonomyIDFromNCBI <- function(html, url) {
         httr2::url_parse(url)[[c("query", "id")]]
     } else {
         html |>
-            rvest::html_elements(xpath = "/html/body/form/table[4]") |>
+            rvest::html_elements(xpath = "/html/body/div[2]/div[2]") |>
             rvest::html_text() |>
-            gsub(".*\n(Taxonomy ID: [0-9]*)\\s.*", "\\1", x = _) |>
-            strsplit(":\\s+") |>
-            unlist() |>
-            utils::tail(1L)
+            gsub(".*Taxonomy ID: (\\d+).*", "\\1", x = _)
     }
 }
