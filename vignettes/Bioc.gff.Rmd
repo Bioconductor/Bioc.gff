@@ -138,14 +138,14 @@ if (!nrow(bquery))
     bfcadd(x = bfc, rname = url, rtype = "web", download = TRUE)
 gff_remote <-
     bfcrpath(bfc, rnames = url, exact = TRUE, download = FALSE, rtype = "web")
-readGFF(gff_remote)
+import(gff_remote)
 ```
 
 Otherwise, you can read the remote GFF file directly using the `readGFF`
 function:
 
 ```{r read-gff-remote-direct,eval=FALSE}
-readGFF(url, version = "3")
+import(url, version = "3")
 ```
 
 ## Conversion to GFF
