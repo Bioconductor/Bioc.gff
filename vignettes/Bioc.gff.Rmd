@@ -134,27 +134,35 @@ readGFF(gff_file, version = "3") |>
 
 You can also read GFF files from remote URLs. The `import` function can handle
 URLs directly, allowing you to read GFF files hosted on remote servers. 
-On the Bioconductor Build System (BBS), we use the `BiocFileCache` package
-to cache remote files, which avoids downloading the file every time the code
-gets run.
+In this example, we read a GFF3 file from the miRBase database:
+
+```{r read-gff-remote-direct,eval=FALSE}
+remote_gff_url <- "https://www.mirbase.org/download/hsa.gff3"
+import(remote_gff_url, version = "3")
+```
+
+To show the example output in the vignette, a more advanced approach is used
+below. This is done to avoid repeated downloads of the remote file when the
+vignette is re-built on the Bioconductor Build System (BBS). We use the
+`BiocFileCache` package to cache the file locally.
 
 ```{r read-gff-remote}
 library(BiocFileCache)
 bfc <- BiocFileCache::BiocFileCache()
-url <- "https://www.mirbase.org/download/hsa.gff3"
-bquery <- bfcquery(bfc, url, "rname", exact = TRUE)
+remote_gff_url <- "https://www.mirbase.org/download/hsa.gff3"
+bquery <- bfcquery(bfc, remote_gff_url, "rname", exact = TRUE)
 if (!nrow(bquery))
-    bfcadd(x = bfc, rname = url, rtype = "web", download = TRUE)
-gff_remote <-
-    bfcrpath(bfc, rnames = url, exact = TRUE, download = FALSE, rtype = "web")
-import(gff_remote)
+    bfcadd(x = bfc, rname = remote_gff_url, rtype = "web", download = TRUE)
+gff_local <- bfcrpath(
+    bfc, rnames = remote_gff_url, exact = TRUE, download = FALSE, rtype = "web"
+)
 ```
 
-Otherwise, you can read the remote GFF file directly using the `readGFF`
-function:
+Finally, the relevant function remains the same for reading a GFF file i.e.,
+via `import()`:
 
-```{r read-gff-remote-direct,eval=FALSE}
-import(url, version = "3")
+```{r read-gff-remote2}
+import(gff_local, version = "3")
 ```
 
 ## Conversion to GFF
