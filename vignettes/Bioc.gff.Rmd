@@ -194,13 +194,13 @@ genomic analyses.
 ```{r make-txdb-from-gff}
 library(txdbmaker)
 txdb <- makeTxDbFromGFF(
-    file = gff_remote,
+    file = gff_local,
     format = "gff3",
     dataSource = "https://www.mirbase.org/download/hsa.gff3",
     organism = "Homo sapiens",
     taxonomyId = 9606
 )
-genome <- grepv("genome-build-id", readLines(gff_remote)) |>
+genome <- grepv("genome-build-id", readLines(gff_local)) |>
     strsplit("# genome-build-id:\\s+") |>
     unlist() |>
     tail(1L)
