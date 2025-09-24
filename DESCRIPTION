@@ -1,7 +1,7 @@
 Package: Bioc.gff
 Title: Read and write GFF and GTF files
-Version: 0.99.16
-Date: 2025-09-15
+Version: 0.99.17
+Date: 2025-09-24
 Authors@R: c(
     person("Michael", "Lawrence", role = "aut"),
     person("Hervé", "Pagès", role = "aut"),
