@@ -47,7 +47,9 @@ importFrom(BiocBaseUtils,
 importFrom(BiocGenerics,
   end,
   path,
+  score,
   start,
+  strand,
   width
 )
 importFrom(BiocIO,

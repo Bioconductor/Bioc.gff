@@ -359,7 +359,7 @@ setMethod(
 #'
 #' @importFrom BiocIO resource
 #' @importFrom Seqinfo genome seqnames
-#' @importFrom BiocGenerics start
+#' @importFrom BiocGenerics start score strand
 #' @importFrom utils packageVersion relist write.table
 #' @importFrom S4Vectors wmsg
 #'
