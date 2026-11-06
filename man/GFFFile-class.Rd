@@ -248,43 +248,56 @@ thus always \code{CharacterList} objects.
 }
 \section{Functions}{
 \itemize{
-\item \code{export.gff()}: 
+\item \code{export.gff()}: Generic for exporting an object to a GFF file.
 
-\item \code{export.gff(ANY)}: 
+\item \code{export.gff(ANY)}: Export any object to a GFF file; dispatches to
+\code{export}.
 
-\item \code{export(object = ANY, con = GFFFile, format = ANY)}: 
+\item \code{export(object = ANY, con = GFFFile, format = ANY)}: Coerce \code{object} to \code{GRanges} (or
+\code{GenomicRangedDataList}) and export it to a \code{GFFFile}.
 
-\item \code{export(object = CompressedGRangesList, con = GFFFile, format = ANY)}: 
+\item \code{export(object = CompressedGRangesList, con = GFFFile, format = ANY)}: Convert a \code{CompressedGRangesList} with
+\code{asGFF} and export it to a \code{GFFFile}.
 
-\item \code{export(object = GenomicRanges, con = GFFFile, format = ANY)}: 
+\item \code{export(object = GenomicRanges, con = GFFFile, format = ANY)}: Write a \code{GenomicRanges} object to a
+\code{GFFFile}, with optional \code{version}, \code{source}, and
+\code{index} arguments.
 
-\item \code{export(object = SimpleGRangesList, con = GFFFile, format = ANY)}: 
+\item \code{export(object = SimpleGRangesList, con = GFFFile, format = ANY)}: Export a \code{SimpleGRangesList} to a
+\code{GFFFile}.
 
-\item \code{export.gff1()}: 
+\item \code{export.gff1()}: Generic for exporting an object to a GFF version 1
+file.
 
-\item \code{export.gff1(ANY)}: 
+\item \code{export.gff1(ANY)}: Export any object to a GFF version 1 file.
 
-\item \code{export.gff2()}: 
+\item \code{export.gff2()}: Generic for exporting an object to a GFF version 2
+file.
 
-\item \code{export.gff2(ANY)}: 
+\item \code{export.gff2(ANY)}: Export any object to a GFF version 2 file.
 
-\item \code{export.gff3()}: 
+\item \code{export.gff3()}: Generic for exporting an object to a GFF version 3
+file.
 
-\item \code{export.gff3(ANY)}: 
+\item \code{export.gff3(ANY)}: Export any object to a GFF version 3 file.
 
-\item \code{import(con = GFFFile, format = ANY, text = ANY)}: 
+\item \code{import(con = GFFFile, format = ANY, text = ANY)}: Import a \code{GFFFile} as a \code{GRanges} object,
+optionally restricted to \code{which} ranges.
 
-\item \code{import.gff1()}: 
+\item \code{import.gff1()}: Generic for importing a GFF version 1 file.
 
-\item \code{import.gff1(ANY)}: 
+\item \code{import.gff1(ANY)}: Import a GFF version 1 file from any connection or
+path.
 
-\item \code{import.gff2()}: 
+\item \code{import.gff2()}: Generic for importing a GFF version 2 file.
 
-\item \code{import.gff2(ANY)}: 
+\item \code{import.gff2(ANY)}: Import a GFF version 2 file from any connection or
+path.
 
-\item \code{import.gff3()}: 
+\item \code{import.gff3()}: Generic for importing a GFF version 3 file.
 
-\item \code{import.gff3(ANY)}: 
+\item \code{import.gff3(ANY)}: Import a GFF version 3 file from any connection or
+path.
 
 \item \code{genome(GFFFile)}: Gets the genome identifier from the "genome-build"
 header directive.

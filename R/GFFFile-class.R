@@ -286,7 +286,7 @@ GVFFile <- function(resource) {
 
 # Export ------------------------------------------------------------------
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Generic for exporting an object to a GFF file.
 #'
 #' @export
 setGeneric(
@@ -294,14 +294,16 @@ setGeneric(
     function(object, con, ...) standardGeneric("export.gff")
 )
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Export any object to a GFF file; dispatches to
+#'   \code{export}.
 #'
 #' @exportMethod export.gff
 setMethod("export.gff", "ANY", function(object, con, ...) {
     export(object, con, ...)
 })
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Coerce \code{object} to \code{GRanges} (or
+#'   \code{GenomicRangedDataList}) and export it to a \code{GFFFile}.
 #'
 #' @importFrom BiocIO export
 #' @importFrom methods is as hasMethod
@@ -319,7 +321,8 @@ setMethod("export", c("ANY", "GFFFile"), function(object, con, format, ...) {
     export(object, con, ...)
 })
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Convert a \code{CompressedGRangesList} with
+#'   \code{asGFF} and export it to a \code{GFFFile}.
 #'
 #' @importClassesFrom GenomicRanges CompressedGRangesList GRangesList
 #'   GenomicRanges
@@ -347,7 +350,9 @@ setMethod(
     }
 )
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Write a \code{GenomicRanges} object to a
+#'   \code{GFFFile}, with optional \code{version}, \code{source}, and
+#'   \code{index} arguments.
 #'
 #' @importFrom BiocIO resource
 #' @importFrom Seqinfo genome seqnames
@@ -528,7 +533,8 @@ UCSCFile <- function(resource) {
     export(object, UCSCFile(resource(con)), subformat = fileFormat(con), ...)
 }
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Export a \code{SimpleGRangesList} to a
+#'   \code{GFFFile}.
 #'
 #' @exportMethod export
 setMethod(
@@ -537,7 +543,8 @@ setMethod(
     .export_SimpleGRangesList_BiocFile
 )
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Generic for exporting an object to a GFF version 1
+#'   file.
 #'
 #' @export
 setGeneric(
@@ -545,7 +552,7 @@ setGeneric(
     function(object, con, ...) standardGeneric("export.gff1")
 )
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Export any object to a GFF version 1 file.
 #'
 #' @exportMethod export.gff1
 setMethod(
@@ -554,7 +561,8 @@ setMethod(
     function(object, con, ...) export(object, con, "gff1", ...)
 )
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Generic for exporting an object to a GFF version 2
+#'   file.
 #'
 #' @export
 setGeneric(
@@ -562,7 +570,7 @@ setGeneric(
     function(object, con, ...) standardGeneric("export.gff2")
 )
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Export any object to a GFF version 2 file.
 #'
 #' @exportMethod export.gff2
 setMethod(
@@ -571,7 +579,8 @@ setMethod(
     function(object, con, ...) export(object, con, "gff2", ...)
 )
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Generic for exporting an object to a GFF version 3
+#'   file.
 #'
 #' @export
 setGeneric(
@@ -579,7 +588,7 @@ setGeneric(
     function(object, con, ...) standardGeneric("export.gff3")
 )
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Export any object to a GFF version 3 file.
 #'
 #' @exportMethod export.gff3
 setMethod(
@@ -602,7 +611,8 @@ connection <- BiocIO:::connection
 manager <- BiocIO:::manager
 release <- BiocIO:::release
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Import a \code{GFFFile} as a \code{GRanges} object,
+#'   optionally restricted to \code{which} ranges.
 #'
 #' @importFrom BiocIO import
 #' @importFrom utils download.file
@@ -689,32 +699,35 @@ setMethod(
     }
 )
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Generic for importing a GFF version 1 file.
 #'
 #' @export
 setGeneric("import.gff1", function(con, ...) standardGeneric("import.gff1"))
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Import a GFF version 1 file from any connection or
+#'   path.
 #'
 #' @exportMethod import.gff1
 setMethod("import.gff1", "ANY", function(con, ...) import(con, "gff1", ...))
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Generic for importing a GFF version 2 file.
 #'
 #' @export
 setGeneric("import.gff2", function(con, ...) standardGeneric("import.gff2"))
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Import a GFF version 2 file from any connection or
+#'   path.
 #'
 #' @exportMethod import.gff2
 setMethod("import.gff2", "ANY", function(con, ...) import(con, "gff2", ...))
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Generic for importing a GFF version 3 file.
 #'
 #' @export
 setGeneric("import.gff3", function(con, ...) standardGeneric("import.gff3"))
 
-#' @describeIn GFFFile-class
+#' @describeIn GFFFile-class Import a GFF version 3 file from any connection or
+#'   path.
 #'
 #' @exportMethod import.gff3
 setMethod("import.gff3", "ANY", function(con, ...) import(con, "gff3", ...))
