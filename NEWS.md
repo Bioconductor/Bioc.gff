@@ -14,7 +14,7 @@
   lookup uses the NCBI E-utilities API instead of scraping the page.
 * `export()` to GFF and GTF files no longer fails with
   `could not find function "score"` when BiocGenerics is not attached;
-  `score` and `strand` are now imported (#1).
+  `score` and `strand` are now imported (#1, @jdrnevich).
 * `import()` no longer fails with "replacement 'metadata' value must be a
   list" when the NCBI lookup for `##species` fails. It now warns, gives
   the reason, and returns empty metadata.
