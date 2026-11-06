@@ -548,7 +548,12 @@ readGFF <- function(
                     metadataFromNCBI(species)
                 },
                 error = function(e) {
-                    warning("failed to retrieve organism information from NCBI")
+                    warning(
+                        "failed to retrieve organism information from NCBI: ",
+                        conditionMessage(e),
+                        call. = FALSE
+                    )
+                    list()
                 }
             )
     }
