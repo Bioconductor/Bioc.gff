@@ -51,7 +51,7 @@ A \code{DataFrame} with columns corresponding to those in the GFF.
 }
 \description{
 Reads a file in GFF format and creates a data frame or
-\code{\link[S4Vectors:DataFrame-class]{S4Vectors::DataFrame()}} object from it. This is a lower-level function
+\code{\link[S4Vectors:DataFrame]{S4Vectors::DataFrame()}} object from it. This is a lower-level function
 that should not be called by the end user. Users are recommended to use
 the \code{import()} function on the \code{GFFFile} or file path.
 }
@@ -102,14 +102,14 @@ readGFF(test_gff3, columns=my_columns, tags=character(0), filter=my_filter)
 \seealso{
 \itemize{
 \item \link[=GFFFile-class]{import} for importing a GFF file as a
-\code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges()}} object.
+\code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges()}} object.
 \item \code{\link[GenomicRanges:makeGRangesFromDataFrame]{GenomicRanges::makeGRangesFromDataFrame()}} in the
-\pkg{GenomicRanges} package for making a \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges()}}
-object from a \code{data.frame} or \code{\link[S4Vectors:DataFrame-class]{S4Vectors::DataFrame()}} object.
+\pkg{GenomicRanges} package for making a \code{\link[GenomicRanges:GRanges]{GenomicRanges::GRanges()}}
+object from a \code{data.frame} or \code{\link[S4Vectors:DataFrame]{S4Vectors::DataFrame()}} object.
 \item \code{\link[txdbmaker:makeTxDbFromGFF]{txdbmaker::makeTxDbFromGFF()}} in the \pkg{txdbmaker}
 package for importing a GFF file as a \link[GenomicFeatures:TxDb-class]{TxDb}
 object.
-\item The \code{\link[S4Vectors:DataFrame-class]{S4Vectors::DataFrame()}} class in the \pkg{S4Vectors} package.
+\item The \code{\link[S4Vectors:DataFrame]{S4Vectors::DataFrame()}} class in the \pkg{S4Vectors} package.
 }
 }
 \author{
