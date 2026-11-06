@@ -40,59 +40,79 @@ importClassesFrom(GenomicRanges,CompressedGRangesList)
 importClassesFrom(GenomicRanges,GRangesList)
 importClassesFrom(GenomicRanges,GenomicRanges)
 importClassesFrom(Rsamtools,TabixFile)
-importFrom(BiocBaseUtils,checkInstalled)
-importFrom(BiocBaseUtils,isScalarCharacter)
-importFrom(BiocGenerics,end)
-importFrom(BiocGenerics,path)
-importFrom(BiocGenerics,start)
-importFrom(BiocGenerics,width)
-importFrom(BiocIO,export)
-importFrom(BiocIO,fileFormat)
-importFrom(BiocIO,import)
-importFrom(BiocIO,resource)
-importFrom(GenomicRanges,"mcols<-")
-importFrom(GenomicRanges,makeGRangesFromDataFrame)
-importFrom(GenomicRanges,mcols)
-importFrom(IRanges,IRanges)
-importFrom(IRanges,PartitioningByEnd)
-importFrom(IRanges,PartitioningByWidth)
-importFrom(IRanges,subsetByOverlaps)
-importFrom(IRanges,togroup)
-importFrom(Rsamtools,TabixFile)
-importFrom(Rsamtools,bgzip)
-importFrom(Rsamtools,headerTabix)
-importFrom(Rsamtools,indexTabix)
-importFrom(Rsamtools,scanTabix)
-importFrom(S4Vectors,"metadata<-")
-importFrom(S4Vectors,"values<-")
-importFrom(S4Vectors,DataFrame)
-importFrom(S4Vectors,elementNROWS)
-importFrom(S4Vectors,isSingleNumber)
-importFrom(S4Vectors,isSingleString)
-importFrom(S4Vectors,isSingleStringOrNA)
-importFrom(S4Vectors,isTRUEorFALSE)
-importFrom(S4Vectors,values)
-importFrom(S4Vectors,wmsg)
-importFrom(Seqinfo,"genome<-")
-importFrom(Seqinfo,"seqinfo<-")
-importFrom(Seqinfo,"seqlevels<-")
-importFrom(Seqinfo,Seqinfo)
-importFrom(Seqinfo,genome)
-importFrom(Seqinfo,provider)
-importFrom(Seqinfo,providerVersion)
-importFrom(Seqinfo,seqinfo)
-importFrom(Seqinfo,seqlevels)
-importFrom(Seqinfo,seqnames)
-importFrom(methods,as)
-importFrom(methods,callGeneric)
-importFrom(methods,hasMethod)
-importFrom(methods,is)
-importFrom(methods,new)
+importFrom(BiocBaseUtils,
+  checkInstalled,
+  isScalarCharacter
+)
+importFrom(BiocGenerics,
+  end,
+  path,
+  start,
+  width
+)
+importFrom(BiocIO,
+  export,
+  fileFormat,
+  import,
+  resource
+)
+importFrom(GenomicRanges,
+  "mcols<-",
+  makeGRangesFromDataFrame,
+  mcols
+)
+importFrom(IRanges,
+  IRanges,
+  PartitioningByEnd,
+  PartitioningByWidth,
+  subsetByOverlaps,
+  togroup
+)
+importFrom(Rsamtools,
+  TabixFile,
+  bgzip,
+  headerTabix,
+  indexTabix,
+  scanTabix
+)
+importFrom(S4Vectors,
+  "metadata<-",
+  "values<-",
+  DataFrame,
+  elementNROWS,
+  isSingleNumber,
+  isSingleString,
+  isSingleStringOrNA,
+  isTRUEorFALSE,
+  values,
+  wmsg
+)
+importFrom(Seqinfo,
+  "genome<-",
+  "seqinfo<-",
+  "seqlevels<-",
+  Seqinfo,
+  genome,
+  provider,
+  providerVersion,
+  seqinfo,
+  seqlevels,
+  seqnames
+)
+importFrom(methods,
+  as,
+  callGeneric,
+  hasMethod,
+  is,
+  new
+)
 importFrom(stats,setNames)
-importFrom(utils,download.file)
-importFrom(utils,head)
-importFrom(utils,packageVersion)
-importFrom(utils,read.table)
-importFrom(utils,relist)
-importFrom(utils,write.table)
+importFrom(utils,
+  download.file,
+  head,
+  packageVersion,
+  read.table,
+  relist,
+  write.table
+)
 useDynLib(Bioc.gff, .registration=TRUE)
