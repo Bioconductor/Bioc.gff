@@ -5,17 +5,20 @@
 #' @name GFFFile-class
 #'
 #' @aliases class:GFFFile class:GFF1File class:GFF2File class:GFF3File
-#' class:GVFFile class:GTFFile GFFFile-class GFF1File-class GFF2File-class
-#' GFF3File-class GVFFile-class GTFFile-class GFFFile GFF1File GFF2File
-#' GFF3File GVFFile GTFFile import,GFFFile,ANY,ANY-method import.gff
-#' import.gff1 import.gff2 import.gff3 import.gff,ANY-method
-#' import.gff1,ANY-method import.gff2,ANY-method import.gff3,ANY-method
-#' export,ANY,GFFFile,ANY-method export,GenomicRanges,GFFFile,ANY-method
-#' export,GenomicRangesList,GFFFile,ANY-method
-#' export,GRangesList,GFFFile,ANY-method export,GRangesList,GTFFile,ANY-method
-#' export.gff export.gff,ANY-method export.gff1 export.gff1,ANY-method
-#' export.gff2 export.gff2,ANY-method export.gff3 export.gff3,ANY-method
-#' genome,GFFFile-method
+#' @aliases class:GVFFile class:GTFFile GFFFile-class GFF1File-class
+#' @aliases GFF2File-class GFF3File-class GVFFile-class GTFFile-class GFFFile
+#' @aliases GFF1File GFF2File GFF3File GVFFile GTFFile
+#' @aliases import,GFFFile,ANY,ANY-method import.gff import.gff1 import.gff2
+#' @aliases import.gff3 import.gff,ANY-method import.gff1,ANY-method
+#' @aliases import.gff2,ANY-method import.gff3,ANY-method
+#' @aliases export,ANY,GFFFile,ANY-method
+#' @aliases export,GenomicRanges,GFFFile,ANY-method
+#' @aliases export,GenomicRangesList,GFFFile,ANY-method
+#' @aliases export,GRangesList,GFFFile,ANY-method
+#' @aliases export,GRangesList,GTFFile,ANY-method export.gff
+#' @aliases export.gff,ANY-method export.gff1 export.gff1,ANY-method
+#' @aliases export.gff2 export.gff2,ANY-method export.gff3
+#' @aliases export.gff3,ANY-method genome,GFFFile-method
 #'
 #' @docType class
 #'
