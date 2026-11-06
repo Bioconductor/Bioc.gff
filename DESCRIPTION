@@ -38,8 +38,8 @@ Suggests:
   GenomeInfoDbData,
   knitr,
   httr2,
+  jsonlite,
   rmarkdown,
-  rvest,
   tinytest,
   txdbmaker,
   TxDb.Hsapiens.UCSC.hg19.knownGene

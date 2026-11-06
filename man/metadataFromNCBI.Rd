@@ -3,36 +3,48 @@
 \name{metadataFromNCBI}
 \alias{metadataFromNCBI}
 \alias{isNCBISpeciesURL}
-\alias{parseOrganismFromNCBI}
-\alias{parseTaxonomyIDFromNCBI}
+\alias{taxonomyIDFromNCBI}
+\alias{taxonFromNCBI}
 \title{Obtain metadata from NCBI}
 \usage{
 isNCBISpeciesURL(url)
 
 metadataFromNCBI(url)
 
-parseOrganismFromNCBI(html)
+taxonomyIDFromNCBI(name)
 
-parseTaxonomyIDFromNCBI(html, url)
+taxonFromNCBI(id)
 }
 \arguments{
 \item{url}{A URL to the NCBI Taxonomy Browser, typically obtained from a
 GFF file with the \verb{## species} line.}
+
+\item{name}{\code{character(1)} An organism name, e.g., "drosophila miranda".}
+
+\item{id}{\code{character()} One or more NCBI Taxonomy IDs.}
 }
 \value{
 \itemize{
-\item metadataFromNCBI: A \code{list} with two elements: \verb{Taxonomy ID} and
-\code{Organism}.
-\item parseOrganismFromNCBI: A \code{character} with the Organism name.
+\item metadataFromNCBI: A \code{list} with three elements: \verb{Taxonomy ID},
+\code{Organism}, and \code{Rank}. All are \code{character} vectors of the same length,
+with one element per match; a name search may match more than one taxon,
+e.g., a genus and a subgenus with the same name.
 \item isNCBISpeciesURL: A \code{logical} indicating if the URL is from the NCBI
 Taxonomy Browser.
-\item parseTaxonomyIDFromNCBI: A \code{character} with the Taxonomy ID.
+\item taxonomyIDFromNCBI: A \code{character} vector of all matching Taxonomy IDs.
+\item taxonFromNCBI: A \code{list} with two \code{character} vectors, \code{Organism}
+(lower case) and \code{Rank} (e.g., "species", "genus"), in the same order as
+\code{id}.
 }
 }
 \description{
-These helper functions obtain both the Taxonomy ID and the Organism name from
-the NCBI Taxonomy Browser. They are a modern re-write of the old functions in
-\code{rtracklayer}. They use \code{httr2} and \code{rvest} to parse the HTML content.
+These helper functions obtain both the Taxonomy ID and the Organism name
+for a NCBI Taxonomy Browser URL. They are a modern re-write of the old
+functions in \code{rtracklayer}. The Taxonomy Browser web pages are no longer
+scrapable (they redirect to NCBI Datasets behind a bot check), so the
+\code{id} or \code{name} query parameter is extracted from the URL and resolved
+with the NCBI E-utilities API via \code{httr2}. A \code{name} is treated as a
+search term and all matching Taxonomy IDs are returned.
 }
 \examples{
 \donttest{
