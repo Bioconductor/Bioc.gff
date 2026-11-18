@@ -152,12 +152,10 @@ bfc <- BiocFileCache::BiocFileCache()
 remote_gff_url <- "https://www.mirbase.org/download/hsa.gff3"
 bquery <- bfcquery(bfc, remote_gff_url, "rname", exact = TRUE)
 if (!nrow(bquery))
-    bfcadd(x = bfc, rname = remote_gff_url, rtype = "web", download = FALSE)
+    bfcadd(x = bfc, rname = remote_gff_url, rtype = "web", download = TRUE)
 gff_local <- bfcrpath(
     bfc, rnames = remote_gff_url, exact = TRUE, download = FALSE, rtype = "web"
 )
-if (!file.exists(gff_local))
-    download.file(remote_gff_url, gff_local, mode = "wb", quiet = TRUE)
 ```
 
 Finally, the relevant function remains the same for reading a GFF file i.e.,
